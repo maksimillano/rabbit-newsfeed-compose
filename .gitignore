@@ -1,0 +1,26 @@
+local.properties
+.gradle
+build
+iosApp/Podfile.lock
+iosApp/Pods/*
+iosApp/iosApp.xcworkspace/*
+iosApp/iosApp.xcodeproj/*
+!iosApp/iosApp.xcodeproj/project.pbxproj
+shared/shared.podspec
+
+
+*.iml
+.DS_Store
+captures
+.externalNativeBuild
+.cxx
+xcuserdata
+/keys/
+
+# Idea
+**/.idea/*
+# Allow code styles and run configurations
+!**/.idea/codeStyles
+!**/.idea/runConfigurations
+!**/.idea/icon.svg
+!**/.idea/.name
