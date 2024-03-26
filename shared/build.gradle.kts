@@ -1,5 +1,3 @@
-@file:Suppress("OPT_IN_IS_NOT_ENABLED")
-
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 import com.cyphercove.icondivvy.IconDivvyPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -155,6 +153,20 @@ android {
     kotlin {
         jvmToolchain(17)
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.11"
+    }
+    buildFeatures {
+        compose = true
+    }
+}
+
+dependencies {
+    implementation(platform("androidx.compose:compose-bom:2024.03.00"))
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
 
 buildkonfig {

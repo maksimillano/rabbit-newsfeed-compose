@@ -26,9 +26,10 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version("0.4.0")
 }
 
-rootProject.name = "rabbit-uikit-compose"
+rootProject.name = "rabbit-newsfeed-compose"
 
-include(":androidApp")
 include(":shared")
-include(":desktopApp")
-include(":jsApp")
+include(":apps")
+include(":apps:androidApp")
+include(":apps:desktopApp")
+include(":apps:jsApp")

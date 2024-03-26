@@ -1,11 +1,11 @@
 local.properties
 .gradle
 build
-iosApp/Podfile.lock
-iosApp/Pods/*
-iosApp/iosApp.xcworkspace/*
-iosApp/iosApp.xcodeproj/*
-!iosApp/iosApp.xcodeproj/project.pbxproj
+apps/iosApp/Podfile.lock
+apps/iosApp/Pods/*
+apps/iosApp/iosApp.xcworkspace/*
+apps/iosApp/iosApp.xcodeproj/*
+!apps/iosApp/iosApp.xcodeproj/project.pbxproj
 shared/shared.podspec
 
 
