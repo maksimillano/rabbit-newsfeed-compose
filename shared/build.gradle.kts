@@ -1,6 +1,7 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.botsystems.toolkits.core.CorePlugin
 import org.botsystems.toolkits.core.exts.IconResizeExtension
+import org.botsystems.toolkits.core.tasks.IconResizeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -38,6 +39,14 @@ repositories {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") // decompose-router
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") // decompose-router
+}
+
+/** Generate icons Moko references after resizing images */
+afterEvaluate {
+    tasks.withType<IconResizeTask> {
+        val mokoGenerate = tasks.getByName("generateMRcommonMain")
+        setFinalizedBy(listOf(mokoGenerate))
+    }
 }
 
 kotlin {
