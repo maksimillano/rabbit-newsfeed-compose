@@ -1,0 +1,71 @@
+[versions]
+agp-version = "7.4.0"
+androidx-activity-compose-version = "1.7.2"
+androidx-compose-material3-version = "1.1.1"
+compose-multiplatform-version = "1.5.10"
+decompose-version = "2.1.4"
+decompose-jetbrains-version = "2.1.4-compose-experimental"
+
+google-gms-android = "4.3.14"
+firebase-crashlitics-android = "2.9.9"
+firebase-bom-android = "32.7.0"
+
+kamel-image-version = "0.9.0"
+moko-resources-version = "0.23.0"
+sqldelight-version = "1.5.5"
+settings-multiplatform-version = "1.1.0"
+buildkonfig-version = "0.15.0"
+
+kotlin-version = "1.9.20"
+kotlinx-coroutines-version = "1.7.3"
+kotlinx-datetime-version = "0.5.0"
+kotlinx-serialization-version = "1.6.0"
+kotlinx-atomicfu-version = "0.22.0"
+
+ktor-version = "2.3.6"
+koin-version = "3.3.3"
+kermit-version = "2.0.2"
+semver-version = "1.4.2"
+cache4k-version = "0.12.0"
+korge-core-version = "5.1.0"
+
+[libraries]
+agp = { module = "com.android.tools.build:gradle", version.ref = "agp-version" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose-version" }
+androidx-compose-windowsizeclass = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "androidx-compose-material3-version" }
+compose-multiplatform = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform-version" }
+decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose-version" }
+decompose-jetbrains-extensions = { module = "com.arkivanov.decompose:extensions-compose-jetbrains", version.ref = "decompose-jetbrains-version" }
+
+moko-resources = { module = "dev.icerock.moko:resources", version.ref = "moko-resources-version" }
+moko-resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "moko-resources-version" }
+sqldelight = { module = "com.squareup.sqldelight:runtime", version.ref = "sqldelight-version" }
+sqldelight-driver-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight-version" }
+sqldelight-driver-native = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqldelight-version" }
+kamel = { module = "media.kamel:kamel-image", version.ref = "kamel-image-version" }
+settings-multiplatform = { module = "com.russhwolf:multiplatform-settings", version.ref = "settings-multiplatform-version" }
+buildkonfig-gradle-plugin = { module = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin", version.ref = "buildkonfig-version" }
+
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-version" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-version" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime-version" }
+kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin-version" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-version" }
+kotlinx-atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version.ref = "kotlinx-atomicfu-version" }
+
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor-version" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor-version" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor-version" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor-version" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor-version" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor-version" }
+ktor-serialization = { module = "io.ktor:ktor-serialization", version.ref = "ktor-version" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-version" }
+
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin-version"}
+
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit-version" }
+semver = { module = "io.github.z4kn4fein:semver", version.ref = "semver-version" }
+cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "cache4k-version" }
+korge-core = { module = "com.soywiz.korge:korge-core", version.ref = "korge-core-version" }

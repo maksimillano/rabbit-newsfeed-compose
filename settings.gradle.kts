@@ -1,8 +1,9 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        mavenCentral()
         google()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 
     plugins {
@@ -10,6 +11,7 @@ pluginManagement {
         val agpVersion = extra["agp.version"] as String
         val composeVersion = extra["compose.version"] as String
         val mokoResourcesVersion = extra["moko.resources.version"] as String
+        val buildkonfig = extra["buildkonfig.version"] as String
 
         kotlin("jvm").version(kotlinVersion)
         kotlin("multiplatform").version(kotlinVersion)
@@ -18,8 +20,13 @@ pluginManagement {
         id("com.android.application").version(agpVersion)
         id("com.android.library").version(agpVersion)
         id("org.jetbrains.compose").version(composeVersion)
+
         id("dev.icerock.mobile.multiplatform-resources").version(mokoResourcesVersion)
+        id("com.codingfeline.buildkonfig").version(buildkonfig)
     }
+}
+
+dependencyResolutionManagement {
 }
 
 plugins {

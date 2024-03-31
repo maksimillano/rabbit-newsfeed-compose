@@ -8,8 +8,15 @@ plugins {
     id("com.android.library") apply false
     id("org.jetbrains.compose") apply false
 
-    id("com.codingfeline.buildkonfig") version "0.15.0" apply false
-    id("dev.icerock.mobile.multiplatform-resources").apply(false)
+    id("dev.icerock.mobile.multiplatform-resources") apply false
+    id("com.codingfeline.buildkonfig") apply false
+}
+
+
+buildscript {
+    dependencies {
+        classpath(libs.semver)
+    }
 }
 
 allprojects {

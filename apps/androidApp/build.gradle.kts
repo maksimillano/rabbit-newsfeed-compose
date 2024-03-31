@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage")
-
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -54,10 +52,16 @@ android {
                 "kmm-rules.pro"
             )
 
+            // TODO: https://github.com/users/maxshengelia/projects/4/views/5?pane=issue&itemId=57486667
+            lint {
+                checkReleaseBuilds = false
+                abortOnError = false
+            }
+
             applicationVariants.all {
                 outputs.all {
                     val outputImpl = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
-                    outputImpl.outputFileName = "app-release.apk"
+                    outputImpl.outputFileName = "maksimillano-release.apk"
                 }
             }
         }
@@ -93,4 +97,3 @@ fun getCurrentDate(): String {
     val currentDate = Date()
     return SimpleDateFormat("dd.MM.yyyy").format(currentDate)
 }
-
