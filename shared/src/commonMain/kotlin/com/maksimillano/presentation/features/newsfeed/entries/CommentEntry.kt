@@ -1,7 +1,7 @@
 package com.maksimillano.presentation.features.newsfeed.entries
 
 import androidx.compose.runtime.Composable
-import com.maksimillano.api.model.newsfeed.newfeed.Feed
+import com.maksimillano.api.model.post.newfeed.Feed
 
 data class CommentEntry(
     private val feedItem: Feed

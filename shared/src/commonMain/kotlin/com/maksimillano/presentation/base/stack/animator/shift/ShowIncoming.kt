@@ -11,15 +11,15 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.maksimillano.presentation.base.BaseComponent
+import com.maksimillano.presentation.base.BaseComponentOld
 import com.maksimillano.presentation.base.stack.AnimatorEventProducer
 import com.maksimillano.presentation.base.stack.animator.TransitionEvent
 import com.maksimillano.util.pxToDpValue
 
 @Composable
 internal fun <ENTRY : Any> ShiftStackAnimator<ENTRY>.showIncoming(
-    topComponent: BaseComponent,
-    bottomComponent: BaseComponent,
+    topComponent: BaseComponentOld,
+    bottomComponent: BaseComponentOld,
     animatorEventProducer: AnimatorEventProducer<ENTRY>
 ) {
     val density = LocalDensity.current

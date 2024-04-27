@@ -1,9 +1,9 @@
 package com.maksimillano.di
 
-import com.maksimillano.api.proxy.newsfeed.NewsFeedLoader
+import com.maksimillano.api.data.posts.PostsLoader
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
 object NewsFeedInjector : KoinComponent {
-    fun newsfeedLoader(): NewsFeedLoader = get()
+    fun newsfeedLoader(): PostsLoader = get()
 }

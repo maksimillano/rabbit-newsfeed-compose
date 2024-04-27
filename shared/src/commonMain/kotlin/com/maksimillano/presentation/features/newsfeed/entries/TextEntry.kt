@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.maksimillano.api.model.newsfeed.newfeed.Feed
+import com.maksimillano.api.model.post.newfeed.Feed
 import com.maksimillano.presentation.component.backgroundThemed
 import com.maksimillano.presentation.component.colorThemed
 import com.maksimillano.presentation.component.dimenThemed

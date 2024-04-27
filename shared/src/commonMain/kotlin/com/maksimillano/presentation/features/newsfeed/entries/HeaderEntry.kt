@@ -1,26 +1,17 @@
 package com.maksimillano.presentation.features.newsfeed.entries
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.maksimillano.api.model.newsfeed.newfeed.Feed
+import com.maksimillano.api.model.post.newfeed.Feed
 import com.maksimillano.presentation.component.backgroundThemed
 import com.maksimillano.presentation.component.colorThemed
 import com.maksimillano.presentation.component.dimenThemed
-import dev.icerock.moko.resources.compose.painterResource
-import io.kamel.image.KamelImage
-import io.kamel.image.asyncPainterResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 data class HeaderEntry(
@@ -66,42 +57,25 @@ data class HeaderEntry(
                     .fillMaxHeight()
                     .weight(1f, fill = true)
             ) {
-//                val painter = painterResource(iconUrl)
-//                Image(
-//                    painter = painter,
+//                val painter = asyncPainterResource(
+//                    data = "https://alialbaali.com/images/Kamel.png"
+//                )
+
+//                KamelImage(
+//                    resource = painter,
 //                    contentDescription = "Image: $key",
 //                    contentScale = ContentScale.Crop,
 //                    modifier = Modifier
 //                        .align(Alignment.CenterVertically)
 //                        .padding(end = 14.dp)
-//                        .size(40.dp)
+//                        .size(30.dp)
 //                        .clip(CircleShape)
 //                        .border(
-//                            0.5.dp,
-//                            colorThemed { it.borderColor },
-//                            CircleShape
+//                            width = 0.5.dp,
+//                            color = colorThemed { it.borderColor },
+//                            shape = CircleShape
 //                        )
 //                )
-
-                val painter = asyncPainterResource(
-                    data = this@HeaderEntry.iconUrl
-                )
-
-                KamelImage(
-                    resource = painter,
-                    contentDescription = "Image: $key",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(end = 14.dp)
-                        .size(30.dp)
-                        .clip(CircleShape)
-                        .border(
-                            width = 0.5.dp,
-                            color = colorThemed { it.borderColor },
-                            shape = CircleShape
-                        )
-                )
 
                 Text(
                     text = title,

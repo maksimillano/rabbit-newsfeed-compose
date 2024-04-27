@@ -15,6 +15,12 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(project(":shared"))
+
+                implementation("com.arkivanov.decompose:decompose:2.1.4")
+                implementation("com.arkivanov.decompose:extensions-compose-jetbrains:2.1.4-compose-experimental")
+
+                implementation(libs.koin.core)
+                implementation(libs.koin.android)
             }
         }
     }

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
+    <string name="rabbit_app_name">Rabbit</string>
     <string name="time_right_now">только что</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_favorites">Избранное</string>
+    <string name="menu_logout">Выйти</string>
 </resources>

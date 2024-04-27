@@ -3,8 +3,8 @@ agp-version = "7.4.0"
 androidx-activity-compose-version = "1.7.2"
 androidx-compose-material3-version = "1.1.1"
 compose-multiplatform-version = "1.5.10"
-decompose-version = "2.1.4"
-decompose-jetbrains-version = "2.1.4-compose-experimental"
+decompose-version = "2.2.2"
+decompose-jetbrains-version = "2.2.2-compose-experimental"
 
 google-gms-android = "4.3.14"
 firebase-crashlitics-android = "2.9.9"
@@ -28,6 +28,7 @@ kermit-version = "2.0.2"
 semver-version = "1.4.2"
 cache4k-version = "0.12.0"
 korge-core-version = "5.1.0"
+ui-tooling = "1.6.6"
 
 [libraries]
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp-version" }
@@ -64,8 +65,10 @@ ktor-serialization = { module = "io.ktor:ktor-serialization", version.ref = "kto
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-version" }
 
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin-version"}
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin-version"}
 
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit-version" }
 semver = { module = "io.github.z4kn4fein:semver", version.ref = "semver-version" }
 cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "cache4k-version" }
 korge-core = { module = "com.soywiz.korge:korge-core", version.ref = "korge-core-version" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "ui-tooling" }

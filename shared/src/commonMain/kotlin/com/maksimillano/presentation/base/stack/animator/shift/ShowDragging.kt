@@ -11,14 +11,14 @@ import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.maksimillano.presentation.base.BaseComponent
+import com.maksimillano.presentation.base.BaseComponentOld
 import com.maksimillano.presentation.base.stack.AnimatorEventProducer
 import com.maksimillano.util.pxToDpValue
 
 @Composable
 internal fun <ENTRY : Any> ShiftStackAnimator<ENTRY>.showDragging(
-    topComponent: BaseComponent,
-    bottomComponent: BaseComponent,
+    topComponent: BaseComponentOld,
+    bottomComponent: BaseComponentOld,
     animatorEventProducer: AnimatorEventProducer<ENTRY>, // OutEnd event
     shiftStateCallback: (ShiftingOutState) -> Unit // Finger up -> animate reset or animate pop
 ) {

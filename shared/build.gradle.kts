@@ -95,6 +95,7 @@ kotlin {
 
                 // Image loader + LRU cache
                 implementation(libs.kamel)
+                implementation(libs.ktor.client.core) // Ktor for support kamel lib
 
                 // Moko resources
                 api(libs.moko.resources)
@@ -122,11 +123,14 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 api(libs.androidx.activity.compose)
+
+                implementation(libs.ktor.client.android) // Ktor for Kamel support
+
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.10.1")
 
                 // Compose Preview
-                implementation("androidx.compose.ui:ui-tooling-preview:1.5.4")
+                implementation("androidx.compose.ui:ui-tooling-preview:1.5.3")
             }
         }
 
@@ -187,6 +191,13 @@ android {
     kotlin {
         jvmToolchain(17)
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.3"
+    }
+    buildFeatures { compose = true }
+}
+dependencies {
+    debugImplementation(libs.androidx.ui.tooling)
 }
 
 buildkonfig {

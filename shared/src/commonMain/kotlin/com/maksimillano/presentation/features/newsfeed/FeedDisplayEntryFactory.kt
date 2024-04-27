@@ -1,31 +1,30 @@
 package com.maksimillano.presentation.features.newsfeed
 
-import androidx.compose.ui.ExperimentalComposeUiApi
 import co.touchlab.kermit.Logger
 import com.maksimillano.AppConstants
 import com.maksimillano.api.model.attachment.PhotoAttachment
-import com.maksimillano.api.model.newsfeed.FeedHistory
-import com.maksimillano.api.model.newsfeed.newfeed.Feed
-import com.maksimillano.api.model.newsfeed.newfeed.PostFeed
+import com.maksimillano.api.model.post.PostHistory
+import com.maksimillano.api.model.post.newfeed.Feed
+import com.maksimillano.api.model.post.newfeed.PostFeed
 import com.maksimillano.presentation.features.newsfeed.entries.*
 import com.maksimillano.util.toFormattedTime
 import kotlin.math.abs
 
-object FeedDisplayEntryFactory {
-    fun create(feedHistory: FeedHistory): List<FeedDisplayEntry> {
-        Logger.i(AppConstants.LOGGER_TAG) { "Creating entries: $feedHistory" }
+class FeedDisplayEntryFactory {
+    fun create(postHistory: PostHistory): List<FeedDisplayEntry> {
+        Logger.i(AppConstants.LOGGER_TAG) { "Creating entries: $postHistory" }
         val feedDisplayEntries: MutableList<FeedDisplayEntry> = mutableListOf()
 
-        if (feedHistory.hasBefore) {
+        if (postHistory.hasBefore) {
             feedDisplayEntries.add(ProgressEntry(ProgressEntry.Gravity.TOP))
         }
 
-        feedHistory.feeds.forEachIndexed { index, feedItem ->
-            createFeedDisplayEntry(feedDisplayEntries, feedItem, feedHistory)
+        postHistory.feeds.forEachIndexed { index, feedItem ->
+            createFeedDisplayEntry(feedDisplayEntries, feedItem, postHistory)
 //            feedDisplayEntries.add(DividerEntry(feedItem))
         }
 
-        if (feedHistory.hasAfter) {
+        if (postHistory.hasAfter) {
             feedDisplayEntries.add(ProgressEntry(ProgressEntry.Gravity.BOTTOM))
         }
 
@@ -35,21 +34,21 @@ object FeedDisplayEntryFactory {
     private fun createFeedDisplayEntry(
         feedDisplayEntries: MutableList<FeedDisplayEntry>,
         feed: Feed,
-        feedHistory: FeedHistory
+        postHistory: PostHistory
     ) {
 
         val ownerInfo: OwnerInfo = if (feed.sourceId < 0) {
-            val group = feedHistory.groups.find { it.groupId == abs(feed.sourceId) }!!
-            OwnerInfo(group.name, group.photos.first())
+            val group = postHistory.channels.find { it.peer.publicId == abs(feed.sourceId) }!!
+            OwnerInfo(group.name, group.avatar.url)
         } else {
-            val profile = feedHistory.users.find { it.userId == feed.sourceId }!!
+            val profile = postHistory.users.find { it.peer.publicId == feed.sourceId }!!
             val name = "${profile.firstName} ${profile.lastName}"
-            OwnerInfo(name, profile.photos.first())
+            OwnerInfo(name, profile.avatar.url)
         }
 
         when (feed) {
             is PostFeed -> {
-                createPostEntry(feedDisplayEntries, feed, feedHistory, ownerInfo)
+                createPostEntry(feedDisplayEntries, feed, postHistory, ownerInfo)
             }
         }
     }
@@ -57,7 +56,7 @@ object FeedDisplayEntryFactory {
     private fun createPostEntry(
         feedDisplayEntries: MutableList<FeedDisplayEntry>,
         postFeedItem: PostFeed,
-        feedHistory: FeedHistory,
+        postHistory: PostHistory,
         ownerInfo: OwnerInfo
     ) {
         val list = listOf(
@@ -78,19 +77,18 @@ object FeedDisplayEntryFactory {
         feedDisplayEntries.addAll(list)
 
 
-        createPostContentEntry(postFeedItem, feedHistory)?.let {
+        createPostContentEntry(postFeedItem, postHistory)?.let {
             feedDisplayEntries.add(it)
         }
 
-        createPostBottomEntry(postFeedItem, feedHistory)?.let {
+        createPostBottomEntry(postFeedItem, postHistory)?.let {
             feedDisplayEntries.add(it)
         }
     }
 
-    @OptIn(ExperimentalComposeUiApi::class)
     private fun createPostContentEntry(
         postFeedItem: PostFeed,
-        feedHistory: FeedHistory
+        postHistory: PostHistory
     ): FeedDisplayEntry? {
         val attachments = postFeedItem.attachments
         if (!attachments.isNullOrEmpty()) {
@@ -105,7 +103,7 @@ object FeedDisplayEntryFactory {
 //                )
 
                 return PhotosEntry(
-                    imageUrl = photoAttachment.thumbnails[0].url ?: "",
+                    imageUrl = photoAttachment.thumbnail.url,
                     photo = photoAttachment,
                     feedItem = postFeedItem
                 )
@@ -114,7 +112,7 @@ object FeedDisplayEntryFactory {
         return null
     }
 
-    private fun createPostBottomEntry(postFeedItem: PostFeed, feedHistory: FeedHistory): FeedDisplayEntry? {
+    private fun createPostBottomEntry(postFeedItem: PostFeed, postHistory: PostHistory): FeedDisplayEntry? {
         val likesInfo = postFeedItem.likesInfo
         val commentsInfo = postFeedItem.commentsInfo
         val repostsInfo = postFeedItem.repostsInfo

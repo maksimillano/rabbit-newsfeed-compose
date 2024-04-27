@@ -1,7 +1,6 @@
 package com.maksimillano.presentation.features.comment
 
-import com.maksimillano.presentation.features.main.MainComponent
+import com.maksimillano.presentation.base.mvi.BaseMviComponent
+import com.maksimillano.presentation.base.ContextWrapper
 
-interface CommentComponent {
-    val mainComponent: MainComponent
-}
+abstract class CommentComponent(contextWrapper: ContextWrapper) : BaseMviComponent<CommentsState, CommentsMviEvent, CommentsNavEvent, CommentsViewAction>(contextWrapper)

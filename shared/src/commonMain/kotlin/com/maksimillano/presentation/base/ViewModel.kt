@@ -13,7 +13,7 @@ interface ViewModel : CoroutineScope, InstanceKeeper.Instance {
 
     override fun onDestroy() {
         if (isActive) {
-            // cancel()
+             cancel()
         }
     }
 }

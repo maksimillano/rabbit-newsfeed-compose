@@ -3,7 +3,7 @@ package com.maksimillano.presentation.features.newsfeed.entries
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.maksimillano.api.model.newsfeed.newfeed.Feed
+import com.maksimillano.api.model.post.newfeed.Feed
 import com.maksimillano.presentation.component.colorThemed
 
 data class DividerEntry(

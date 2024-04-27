@@ -1,8 +1,7 @@
 package com.maksimillano.presentation.features.newsfeed
 
-import kotlinx.coroutines.flow.StateFlow
+import com.maksimillano.presentation.base.mvi.BaseMviComponent
+import com.maksimillano.presentation.base.ContextWrapper
 
-interface NewsFeedComponent {
-    val viewModel: NewsFeedViewModel
-    val state: StateFlow<NewsFeedState>
-}
+abstract class NewsFeedComponent(contextWrapper: ContextWrapper)
+    : BaseMviComponent<NewsFeedState, NewsFeedMviEvent, NewsFeedNavEvent, NewsFeedViewAction>(contextWrapper)

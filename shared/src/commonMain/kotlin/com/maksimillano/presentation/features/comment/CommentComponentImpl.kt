@@ -1,14 +1,16 @@
 package com.maksimillano.presentation.features.comment
 
-import com.arkivanov.decompose.ComponentContext
-import com.maksimillano.presentation.features.main.MainComponent
+import androidx.compose.runtime.Composable
+import com.arkivanov.essenty.instancekeeper.getOrCreate
+import com.maksimillano.presentation.base.mvi.MviRouter
+import com.maksimillano.presentation.base.ContextWrapper
 
-class CommentComponentImpl(
-    componentContext: ComponentContext,
-    override val mainComponent: MainComponent
-) : CommentComponent, ComponentContext by componentContext {
+class CommentComponentImpl(contextWrapper: ContextWrapper) : CommentComponent(contextWrapper) {
+    override val viewModel: CommentsViewModel = instanceKeeper.getOrCreate { CommentsViewModelImpl() }
 
-    companion object {
-        const val TRANSACTION_DURATION = 500
+    override fun createRouter(): MviRouter<CommentsNavEvent> = MviRouter {
     }
+
+    @Composable
+    override fun render() = CommentScreen(this)
 }

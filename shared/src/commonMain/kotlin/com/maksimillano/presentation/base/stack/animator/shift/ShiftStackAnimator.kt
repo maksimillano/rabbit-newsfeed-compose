@@ -4,7 +4,7 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.Child
-import com.maksimillano.presentation.base.BaseComponent
+import com.maksimillano.presentation.base.BaseComponentOld
 import com.maksimillano.presentation.base.stack.AnimatorEventProducer
 import com.maksimillano.presentation.base.stack.animator.StackAnimator
 import com.maksimillano.presentation.base.stack.animator.StackState
@@ -15,7 +15,7 @@ class ShiftStackAnimator<ENTRY : Any>(
     @Composable
     override fun renderStack(
         stackState: StackState<ENTRY>,
-        stack: List<Child.Created<ENTRY, BaseComponent>>,
+        stack: List<Child.Created<ENTRY, BaseComponentOld>>,
         animatorEventProducer: AnimatorEventProducer<ENTRY>
     ) {
 

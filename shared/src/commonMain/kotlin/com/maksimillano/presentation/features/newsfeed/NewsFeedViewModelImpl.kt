@@ -1,94 +1,47 @@
 package com.maksimillano.presentation.features.newsfeed
 
-import com.maksimillano.api.preference.UserPreferences
-import com.maksimillano.api.proxy.newsfeed.NewsFeedLoader
-import com.maksimillano.api.proxy.newsfeed.NewsFeedLoaderEvent
-import kotlinx.coroutines.flow.*
+import com.maksimillano.api.data.loader.Direction
+import com.maksimillano.api.data.posts.PostsLoader
+import com.maksimillano.api.data.posts.PostsLoaderData
+import com.maksimillano.api.data.newsfeed.NewsFeedDependencies
 import kotlinx.coroutines.launch
 
 class NewsFeedViewModelImpl(
-    private val newsFeedLoader: NewsFeedLoader,
-    private val userPreferences: UserPreferences
-) : NewsFeedViewModel {
-    private val stateProducer: MutableStateFlow<NewsFeedPartialState> = MutableStateFlow(
-        NewsFeedMutations.empty()
-    )
+    private val postsLoader: PostsLoader,
+    private val newsFeedDependencies: NewsFeedDependencies,
+    private val feedDisplayEntryFactory: FeedDisplayEntryFactory
+) : NewsFeedViewModel(NewsFeedState()) {
 
-    override val state: StateFlow<NewsFeedState> = stateProducer
-        .scan(NewsFeedState()) { accumulator, mutation -> mutation(accumulator) }
-        .distinctUntilChanged()
-        .onStart { observeLoaders() }
-        .stateIn(this, SharingStarted.Eagerly, NewsFeedState())
-
-    override fun postEvent(event: NewsFeedMviEvent) {
-        when (event) {
-            is NewsFeedMviEvent.LoadLatest -> loadLatest()
-            is NewsFeedMviEvent.LoadBefore -> loadBefore(event.weight)
-            is NewsFeedMviEvent.LoadSince -> loadSince(event.weight)
-        }
+    init {
+        observeNewsfeed()
+        postsLoader.loadMore(Direction.LATEST)
     }
 
-    private fun loadLatest() {
-        if (!newsFeedLoader.isLoading) {
-            launch {
-                newsFeedLoader.loadLatest()
-            }
-        }
-    }
-
-    private fun loadSince(weight: Long) {
-        if (!newsFeedLoader.isLoading && newsFeedLoader.hasHistoryAfter) {
-            launch {
-                newsFeedLoader.loadSince(weight)
-            }
-        }
-    }
-
-    private fun loadBefore(weight: Long) {
-        if (!newsFeedLoader.isLoading && newsFeedLoader.hasHistoryBefore) {
-            launch {
-                newsFeedLoader.loadBefore(weight)
-            }
-        }
-    }
-
-    private fun observeLoaders() {
+    private fun observeNewsfeed() {
         launch {
-            newsFeedLoader.events
+            postsLoader.data
                 .collect {
                     handleLoaderState(it)
                 }
         }
     }
 
-    private suspend fun handleLoaderState(loaderState: NewsFeedLoaderEvent) {
-        val mutation = when (loaderState) {
-            is NewsFeedLoaderEvent.FailedEvent -> {
-                NewsFeedMutations.onFailure(
-                    mapError(loaderState.reason)
-                )
-            }
-            is NewsFeedLoaderEvent.FeedLoadedEvent -> {
-                if (loaderState.isActual) {
-                    NewsFeedMutations.onActualResult(loaderState.feedHistory)
-                } else {
-                    NewsFeedMutations.onCacheResult(loaderState.feedHistory)
-                }
-            }
-
-            is NewsFeedLoaderEvent.HasPrefetchedEvent -> {
-                TODO()
-            }
+    override fun onNewEvent(event: NewsFeedMviEvent) {
+        when (event) {
+            is NewsFeedMviEvent.LoadLatest -> postsLoader.loadMore(Direction.LATEST)
+            is NewsFeedMviEvent.LoadBefore -> postsLoader.loadMore(Direction.BEFORE)
+            is NewsFeedMviEvent.LoadSince -> postsLoader.loadMore(Direction.SINCE)
+            is NewsFeedMviEvent.SetReaction -> newsFeedDependencies.postInteractor.setReaction(event.post, event.channel, event.reaction)
+            is NewsFeedMviEvent.UnsetReaction -> newsFeedDependencies.postInteractor.unsetReaction(event.post, event.channel)
+            is NewsFeedMviEvent.SaveToFavorites -> newsFeedDependencies.postInteractor.savePost(event.post, event.channel)
         }
-        mutation.post()
     }
 
-    private fun mapError(reason: String): Error {
-        // TODO check error, maybe use throwable for mapping
-        return Error.Unknown
-    }
-
-    suspend fun NewsFeedPartialState.post() {
-        stateProducer.emit(this)
+    private fun handleLoaderState(loaderData: PostsLoaderData) {
+        withState {  state ->
+            state.copy(
+                feedItemEntries = feedDisplayEntryFactory.create(loaderData.postHistory)
+            )
+        }
     }
 }

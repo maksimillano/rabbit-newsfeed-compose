@@ -9,4 +9,6 @@ sealed interface Theme {
     val isLight: Boolean
     val themeName: String
         get() = this::class.simpleName!!
+    val themeId: Int
+        get() = 0
 }

@@ -3,7 +3,7 @@ package com.maksimillano.presentation.base.stack
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.*
 import com.arkivanov.decompose.value.Value
-import com.maksimillano.presentation.base.BaseComponent
+import com.maksimillano.presentation.base.BaseComponentOld
 import com.maksimillano.presentation.base.stack.animator.TransitionEvent
 import com.maksimillano.presentation.base.stack.animator.SimpleStackAnimator
 import com.maksimillano.presentation.base.stack.animator.StackState
@@ -12,10 +12,10 @@ import kotlinx.coroutines.flow.*
 
 abstract class StackComponent<ENTRY : Any>(
     componentContext: ComponentContext,
-) : BaseComponent(componentContext),
+) : BaseComponentOld(componentContext),
     IStackComponent<ENTRY> {
     protected open val navigation = StackNavigation<ENTRY>()
-    protected abstract val stack: Value<ChildStack<ENTRY, BaseComponent>>
+    protected abstract val stack: Value<ChildStack<ENTRY, BaseComponentOld>>
 
     private val stackStateProducer: MutableStateFlow<StackState<ENTRY>> = MutableStateFlow(
         StackState.Settled(

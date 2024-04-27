@@ -1,5 +1,7 @@
 package com.maksimillano.api.model.attachment
 
+import com.maksimillano.api.model.post.image.ImageSizeable
+
 interface VideoAttachment : Attachment {
     val id: Int
     val ownerId: Int
@@ -8,18 +10,11 @@ interface VideoAttachment : Attachment {
     val description: String
     val duration: Int
     val type: Type
-    val image: List<FramePhoto>
-    val firstFrame: List<FramePhoto>
+    val image: ImageSizeable
     val views: Int
     val player: String
     val width: Int
     val height: Int
-
-    data class FramePhoto(
-        val url: String,
-        val height: Int,
-        val width: Int
-    )
 
     enum class Type {
         VIDEO,

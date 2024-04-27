@@ -11,15 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.maksimillano.presentation.base.BaseComponent
+import com.maksimillano.presentation.base.BaseComponentOld
 import com.maksimillano.presentation.base.stack.AnimatorEventProducer
 import com.maksimillano.presentation.base.stack.animator.TransitionEvent
 import com.maksimillano.util.pxToDpValue
 
 @Composable
 internal fun <ENTRY : Any> ShiftStackAnimator<ENTRY>.showTouchUp(
-    topComponent: BaseComponent,
-    bottomComponent: BaseComponent,
+    topComponent: BaseComponentOld,
+    bottomComponent: BaseComponentOld,
     touchUpState: ShiftingOutState.TouchUp,
     animatorEventProducer: AnimatorEventProducer<ENTRY>,
     shiftStateCallback: (ShiftingOutState) -> Unit // Finger up -> animate reset or animate pop

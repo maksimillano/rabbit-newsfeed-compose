@@ -1,5 +1,5 @@
 package com.maksimillano.presentation.features.newsfeed
 
-import com.maksimillano.presentation.base.MviViewModel
+import com.maksimillano.presentation.base.mvi.BaseMviViewModel
 
-interface NewsFeedViewModel : MviViewModel<NewsFeedState, NewsFeedMviEvent>
+abstract class NewsFeedViewModel(initState: NewsFeedState) : BaseMviViewModel<NewsFeedState, NewsFeedMviEvent, NewsFeedNavEvent, NewsFeedViewAction>(initState)
