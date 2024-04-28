@@ -1,14 +1,15 @@
 package com.maksimillano.presentation.features.navigation
 
 import androidx.compose.runtime.Stable
-import com.maksimillano.api.model.account.UserAccount
+import com.maksimillano.api.domain.features.navigation.NavigationMenuItem
+import com.maksimillano.api.domain.model.account.UserAccount
 import com.maksimillano.presentation.base.mvi.MviState
 
 @Stable
 data class NavigationState(
     val theme: ThemeType,
     val accountBadge: AccountInfoBadge,
-    val menuItems: List<MenuItem>,
+    val menuItems: List<NavigationMenuItem>,
 ) : MviState {
 
     sealed interface AccountInfoBadge {
@@ -22,9 +23,5 @@ data class NavigationState(
 
     enum class ThemeType {
         LIGHT, DARK
-    }
-
-    sealed interface MenuItem {
-        data object Exit : MenuItem
     }
 }

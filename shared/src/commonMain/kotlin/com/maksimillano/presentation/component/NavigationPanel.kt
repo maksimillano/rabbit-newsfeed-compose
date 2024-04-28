@@ -18,6 +18,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.maksimillano.MR
+import com.maksimillano.api.domain.features.navigation.NavigationMenuItem
 import com.maksimillano.presentation.features.navigation.NavigationState
 import com.maksimillano.util.clickableNoRipple
 import dev.icerock.moko.resources.compose.painterResource
@@ -30,7 +31,7 @@ fun DrawerNavigationPanel(
     updateTheme: () -> Unit,
     accountSelect: () -> Unit,
     anotherAccountSelect: (number: Int) -> Unit,
-    menuSelect: (NavigationState.MenuItem) -> Unit
+    menuSelect: (NavigationMenuItem) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -161,7 +162,7 @@ fun ColumnScope.ShowLoginBadge(
 }
 
 @Composable
-private fun DrawerItemsList(state: NavigationState, menuSelect: (NavigationState.MenuItem) -> Unit) {
+private fun DrawerItemsList(state: NavigationState, menuSelect: (NavigationMenuItem) -> Unit) {
     val list = state.menuItems
     LazyColumn(
         modifier = Modifier

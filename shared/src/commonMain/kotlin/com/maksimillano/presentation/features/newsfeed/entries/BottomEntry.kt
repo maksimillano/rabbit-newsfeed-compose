@@ -9,7 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
-import com.maksimillano.api.model.post.newfeed.Feed
+import com.maksimillano.api.domain.model.post.Post
+import com.maksimillano.api.domain.model.post.Postable
 import com.maksimillano.presentation.component.backgroundThemed
 import com.maksimillano.presentation.component.colorThemed
 import com.maksimillano.presentation.component.dimenThemed
@@ -27,9 +28,9 @@ data class BottomEntry(
 //    private val canComment: Boolean,
 //    private val canReply: Boolean,
 //    private val viewsVisible: Boolean,
-    private val feedItem: Feed,
+    private val feedItem: Post,
 ) : FeedDisplayEntry {
-    override val key: String = "Bottom${feedItem.sourceId}-${feedItem.date}"
+    override val key: String = "Bottom${feedItem.sourceId}-${feedItem.postId}"
 
     @Composable
     override fun onBind() {

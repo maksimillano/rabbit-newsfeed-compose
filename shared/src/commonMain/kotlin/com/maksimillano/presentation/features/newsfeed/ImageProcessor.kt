@@ -1,9 +1,5 @@
 package com.maksimillano.presentation.features.newsfeed
 
-import com.maksimillano.api.model.attachment.PhotoAttachment
-import com.maksimillano.api.model.post.image.ImageSizeable
-import kotlin.math.min
-
 object ImageProcessor {
     private const val MAX_RATIO = 1.5
 

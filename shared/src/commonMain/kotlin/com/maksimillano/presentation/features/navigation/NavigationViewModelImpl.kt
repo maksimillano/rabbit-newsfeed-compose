@@ -1,16 +1,15 @@
 package com.maksimillano.presentation.features.navigation
 
-import com.maksimillano.api.data.account.AccountLoader
-import com.maksimillano.api.data.account.AccountLoaderData
-import com.maksimillano.api.data.theme.ThemeProvider
-import com.maksimillano.api.theme.DarkTheme
-import com.maksimillano.api.theme.Theme
+import com.maksimillano.api.domain.features.account.AccountSupplierData
+import com.maksimillano.api.domain.features.navigation.NavigationDependencies
+import com.maksimillano.api.domain.features.navigation.NavigationMenuItem
+import com.maksimillano.api.domain.theme.DarkTheme
+import com.maksimillano.api.domain.theme.Theme
 import korlibs.io.async.launch
 
 class NavigationViewModelImpl(
-    private val accountLoader: AccountLoader,
-    private val themeProvider: ThemeProvider,
-) : NavigationViewModel(createDefaultState(accountLoader, themeProvider)) {
+    private val dependencies: NavigationDependencies,
+) : NavigationViewModel(createDefaultState(dependencies)) {
 
     init {
         observeAccounts()
@@ -19,7 +18,7 @@ class NavigationViewModelImpl(
 
     private fun observeAccounts() {
         launch {
-            accountLoader.data.collect { data ->
+            dependencies.accountSupplier.state.collect { data ->
                 withState { state ->
                     state.copy(
                         accountBadge = AccountMapper.map(data)
@@ -31,7 +30,7 @@ class NavigationViewModelImpl(
 
     private fun observeTheme() {
         launch {
-            themeProvider.theme.collect { theme ->
+            dependencies.themeSupplier.state.collect { theme ->
                 withState { state ->
                     state.copy(
                         theme = ThemeMapper.map(theme)
@@ -43,6 +42,14 @@ class NavigationViewModelImpl(
 
     override fun onNewEvent(event: NavigationMviEvent) {
         when (event) {
+            is NavigationMviEvent.SwitchTheme -> {
+                launch {
+                    dependencies.switchThemeInteractor.execute()
+                }
+            }
+            is NavigationMviEvent.Logout -> {
+                dependencies.logoutInteractor.execute()
+            }
             is NavigationMviEvent.OnMenuClick -> {
                 // track stat
                 handleMenuClick(event.menuItem)
@@ -51,9 +58,9 @@ class NavigationViewModelImpl(
         }
     }
 
-    private fun handleMenuClick(menuItem: NavigationState.MenuItem) {
+    private fun handleMenuClick(menuItem: NavigationMenuItem) {
         when (menuItem) {
-            is NavigationState.MenuItem.Exit -> {
+            is NavigationMenuItem.Exit -> {
                 postNavigationEvent(NavigationNavEvent.Logout)
             }
         }
@@ -69,32 +76,24 @@ class NavigationViewModelImpl(
     }
 
     private data object AccountMapper {
-        fun map(account: AccountLoaderData): NavigationState.AccountInfoBadge {
+        fun map(account: AccountSupplierData): NavigationState.AccountInfoBadge {
             return when (account) {
-                is AccountLoaderData.UserData -> {
+                is AccountSupplierData.UserData -> {
                     NavigationState.AccountInfoBadge.UsersBadge(account.current, account.others)
                 }
-                is AccountLoaderData.AnonData -> {
+                is AccountSupplierData.AnonData -> {
                     NavigationState.AccountInfoBadge.LoginBadge
                 }
             }
         }
     }
 
-    private data object MenuItemsProvider {
-        fun get(): List<NavigationState.MenuItem> {
-            return listOf(
-                NavigationState.MenuItem.Exit
-            )
-        }
-    }
-
     companion object {
-        private fun createDefaultState(accountLoader: AccountLoader, themeProvider: ThemeProvider): NavigationState {
+        private fun createDefaultState(dependencies: NavigationDependencies): NavigationState {
             return NavigationState(
-                theme = ThemeMapper.map(themeProvider.theme.value),
-                accountBadge = AccountMapper.map(accountLoader.data.value),
-                menuItems = MenuItemsProvider.get()
+                theme = ThemeMapper.map(dependencies.themeSupplier.state.value),
+                accountBadge = AccountMapper.map(dependencies.accountSupplier.state.value),
+                menuItems = dependencies.menuItemsIterator.execute()
             )
         }
     }

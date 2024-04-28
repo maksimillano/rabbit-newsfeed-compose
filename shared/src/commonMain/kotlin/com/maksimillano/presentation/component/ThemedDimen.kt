@@ -5,7 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.TextUnit
 import com.maksimillano.presentation.theme.AppThemeProvider
-import com.maksimillano.api.theme.DimenScheme
+import com.maksimillano.api.domain.theme.DimenScheme
 
 @Composable
 inline fun dimenThemed(

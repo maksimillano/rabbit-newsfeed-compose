@@ -1,7 +1,7 @@
 package com.maksimillano.android
 
 import android.app.Application
-import com.maksimillano.appContextHolder
+import com.maksimillano.util.appContextHolder
 import com.maksimillano.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger

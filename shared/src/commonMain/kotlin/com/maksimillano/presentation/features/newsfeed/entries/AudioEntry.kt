@@ -1,15 +1,15 @@
 package com.maksimillano.presentation.features.newsfeed.entries
 
 import androidx.compose.runtime.Composable
-import com.maksimillano.api.model.attachment.AudioAttachment
-import com.maksimillano.api.model.post.newfeed.Feed
+import com.maksimillano.api.domain.model.attachment.AudioAttachment
+import com.maksimillano.api.domain.model.post.Post
 
 data class AudioEntry(
     private val audio: AudioAttachment,
-    private val feedItem: Feed
+    private val post: Post
 ) : FeedDisplayEntry {
 
-    override val key: String = "Audio${audio.id}"
+    override val key: String = "Audio${post.sourceId}-${post.postId}-${audio.id}"
 
     @Composable
     override fun onBind() {
