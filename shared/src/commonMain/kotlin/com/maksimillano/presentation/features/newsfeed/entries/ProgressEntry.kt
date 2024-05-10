@@ -4,11 +4,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.maksimillano.presentation.component.colorThemed
 
 data class ProgressEntry(
     private val gravity: Gravity
@@ -22,7 +22,7 @@ data class ProgressEntry(
                 .fillMaxWidth()
         ) {
             CircularProgressIndicator(
-                color = colorThemed { it.accentColor },
+                color = MaterialTheme.colorScheme.tertiary,
                 modifier = Modifier.align(Alignment.Center)
             )
         }

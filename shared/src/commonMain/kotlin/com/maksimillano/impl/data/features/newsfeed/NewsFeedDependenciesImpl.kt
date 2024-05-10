@@ -1,10 +1,12 @@
 package com.maksimillano.impl.data.features.newsfeed
 
 import com.maksimillano.api.domain.features.newsfeed.NewsFeedDependencies
-import com.maksimillano.presentation.features.newsfeed.DefaultFeedDisplayEntryFactory
+import com.maksimillano.api.domain.features.newsfeed.NewsFeedDisplayEntryFactory
 
-class NewsFeedDependenciesImpl : NewsFeedDependencies {
-    override val displayEntryFactory = DefaultFeedDisplayEntryFactory()
+class NewsFeedDependenciesImpl(
+    feedDisplayEntryFactory: NewsFeedDisplayEntryFactory
+) : NewsFeedDependencies {
+    override val displayEntryFactory = feedDisplayEntryFactory
     override val newsfeedLoader = DefaultNewsFeedLoader()
     override val postInteractor = PostInteractorImpl()
 

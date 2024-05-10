@@ -2,15 +2,24 @@ package com.maksimillano.presentation.features.newsfeed
 
 import co.touchlab.kermit.Logger
 import com.maksimillano.api.domain.features.newsfeed.NewsFeedDisplayEntryFactory
-import com.maksimillano.util.BuildConstants
 import com.maksimillano.api.domain.model.attachment.PhotoAttachment
+import com.maksimillano.api.domain.model.post.Post
 import com.maksimillano.api.domain.model.post.PostHistory
 import com.maksimillano.api.domain.model.post.Postable
-import com.maksimillano.api.domain.model.post.Post
-import com.maksimillano.presentation.features.newsfeed.entries.*
+import com.maksimillano.presentation.features.newsfeed.entries.BottomEntry
+import com.maksimillano.presentation.features.newsfeed.entries.FeedDisplayEntry
+import com.maksimillano.presentation.features.newsfeed.entries.HeaderEntry
+import com.maksimillano.presentation.features.newsfeed.entries.ImagesRowEntry
+import com.maksimillano.presentation.features.newsfeed.entries.ImagesRowGridEntry
+import com.maksimillano.presentation.features.newsfeed.entries.ProgressEntry
+import com.maksimillano.presentation.features.newsfeed.entries.TextEntry
+import com.maksimillano.util.BuildConstants
 import com.maksimillano.util.toFormattedTime
 
-class DefaultFeedDisplayEntryFactory : NewsFeedDisplayEntryFactory {
+class DefaultFeedDisplayEntryFactory(
+    private val imageSizeCalculator: ImageSizeCalculator
+) : NewsFeedDisplayEntryFactory {
+
     override fun create(feedHistory: PostHistory): List<FeedDisplayEntry> {
         Logger.i(BuildConstants.LOGGER_TAG) { "Creating entries: $feedHistory" }
         val feedDisplayEntries: MutableList<FeedDisplayEntry> = mutableListOf()
@@ -63,7 +72,6 @@ class DefaultFeedDisplayEntryFactory : NewsFeedDisplayEntryFactory {
             HeaderEntry(
                 title = ownerInfo.name,
                 iconUrl = ownerInfo.photo,
-                hasUnwatchedStory = false,
                 dateFormatted = postItem.date.toFormattedTime(),
                 date = postItem.date,
                 post = postItem
@@ -77,39 +85,47 @@ class DefaultFeedDisplayEntryFactory : NewsFeedDisplayEntryFactory {
         feedDisplayEntries.addAll(list)
 
 
-        createPostContentEntry(postItem, postHistory)?.let {
-            feedDisplayEntries.add(it)
-        }
+        createPostContentEntry(postItem, postHistory, feedDisplayEntries)
 
-        createPostBottomEntry(postItem, postHistory)?.let {
-            feedDisplayEntries.add(it)
-        }
+//        createPostBottomEntry(postItem, postHistory)?.let {
+//            feedDisplayEntries.add(it)
+//        }
     }
 
     private fun createPostContentEntry(
         postItem: Post,
-        postHistory: PostHistory
-    ): FeedDisplayEntry? {
+        postHistory: PostHistory,
+        feedDisplayEntries: MutableList<FeedDisplayEntry>
+    ) {
         val attachments = postItem.attachments
-        if (!attachments.isNullOrEmpty()) {
-            val photoAttachment = attachments.filterIsInstance<PhotoAttachment>().firstOrNull()
-            if (photoAttachment != null) {
-//                val thumbnails = photoAttachment.thumbnails!!
-//                val result = mutableListOf<ImageProcessor.SuitableThumb>()
-//                ImageProcessor.process(
-//                    listOf(thumbnails),
-//                    ScreenWidth,
-//                    result
-//                )
+        if (attachments.isNotEmpty()) {
+            val photoAttachments = attachments.filterIsInstance<PhotoAttachment>()
 
-                return PhotosEntry(
-                    imageUrl = photoAttachment.thumbnail.url,
-                    photo = photoAttachment,
-                    post = postItem
-                )
+            val imagesRows = mutableListOf<ImageSizeCalculator.ImagesRow>()
+            imageSizeCalculator.process(
+                photoAttachments.map { it.thumbnail },
+                imagesRows
+            )
+
+            imagesRows.forEachIndexed { index, row ->
+                val entryPart = when {
+                    index == 0 && imagesRows.size == 1 -> EntryPart.Full
+                    index == 0 -> EntryPart.Top
+                    index == imagesRows.lastIndex -> EntryPart.Bottom
+                    else -> EntryPart.Middle(index - 1)
+                }
+
+                val entry =  when (row) {
+                    is ImageSizeCalculator.GridImagesRow -> {
+                        ImagesRowGridEntry(row, index, postItem)
+                    }
+                    is ImageSizeCalculator.SimpleImagesRow -> {
+                        ImagesRowEntry(row, entryPart, postItem)
+                    }
+                }
+                feedDisplayEntries.add(entry)
             }
         }
-        return null
     }
 
     private fun createPostBottomEntry(postItem: Post, postHistory: PostHistory): FeedDisplayEntry? {

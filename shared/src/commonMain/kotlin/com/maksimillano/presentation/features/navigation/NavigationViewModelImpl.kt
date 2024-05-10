@@ -5,7 +5,7 @@ import com.maksimillano.api.domain.features.navigation.NavigationDependencies
 import com.maksimillano.api.domain.features.navigation.NavigationMenuItem
 import com.maksimillano.api.domain.theme.DarkTheme
 import com.maksimillano.api.domain.theme.Theme
-import korlibs.io.async.launch
+import kotlinx.coroutines.launch
 
 class NavigationViewModelImpl(
     private val dependencies: NavigationDependencies,

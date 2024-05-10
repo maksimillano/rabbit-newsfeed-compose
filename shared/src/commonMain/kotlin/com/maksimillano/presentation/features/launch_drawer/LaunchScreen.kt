@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -12,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import com.maksimillano.MR
-import com.maksimillano.presentation.component.colorThemed
 import com.maksimillano.presentation.features.newsfeed.NewsFeedComponent
 import com.maksimillano.util.stringValue
 import kotlinx.coroutines.CoroutineScope
@@ -56,7 +56,7 @@ private fun AppBarWithContent(state: DrawerState, newsFeedComponent: NewsFeedCom
                 title = {
                     Text(
                         text = stringValue(MR.strings.rabbit_app_name),
-                        color = colorThemed { it.textColor },
+                        color = MaterialTheme.colorScheme.onPrimary,
                         fontSize = 24.sp
                     )
                 },
@@ -71,16 +71,16 @@ private fun AppBarWithContent(state: DrawerState, newsFeedComponent: NewsFeedCom
                         Icon(
                             imageVector = Icons.Filled.Menu,
                             contentDescription = "Navigation Drawer",
-                            tint = colorThemed { it.primaryContentColor }
+                            tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 },
-                backgroundColor = colorThemed { it.primaryColor },
+                backgroundColor = MaterialTheme.colorScheme.primary,
             )
         },
         content = {
             newsFeedComponent.render()
         },
-        backgroundColor = colorThemed { it.backgroundBarColor }
+        backgroundColor = MaterialTheme.colorScheme.surface
     )
 }

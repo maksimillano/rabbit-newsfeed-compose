@@ -3,16 +3,24 @@ package com.maksimillano.presentation.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -36,7 +44,7 @@ fun DrawerNavigationPanel(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .backgroundThemed { it.backgroundColor }
+            .background(MaterialTheme.colorScheme.background)
     ) {
         DrawerAppBar(state, updateTheme, accountSelect, anotherAccountSelect)
         DrawerItemsList(state, menuSelect)
@@ -53,7 +61,7 @@ private fun DrawerAppBar(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .backgroundThemed { it.primaryColor }
+            .background(MaterialTheme.colorScheme.primary)
             .padding(
                 horizontal = 14.dp,
                 vertical = 14.dp
@@ -100,7 +108,7 @@ fun ColumnScope.ShowUsersBadge(
                 .clip(CircleShape)
                 .border(
                     2.dp,
-                    colorThemed { it.borderColor },
+                    MaterialTheme.colorScheme.outline,
                     CircleShape
                 )
                 .align(Alignment.CenterVertically)
@@ -121,7 +129,7 @@ fun ColumnScope.ShowUsersBadge(
                 .clickableNoRipple { updateTheme() }
                 .align(Alignment.Top),
             colorFilter = ColorFilter.tint(
-                colorThemed { it.accentColor }
+                MaterialTheme.colorScheme.tertiary
             )
         )
     }
@@ -136,7 +144,7 @@ fun ColumnScope.ShowUsersBadge(
         ) {
             Text(
                 text = "${accountBadge.current.firstName} ${accountBadge.current.lastName}",
-                color = colorThemed { it.textColor },
+                color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = dimenThemed { it.textMedium },
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
@@ -144,7 +152,7 @@ fun ColumnScope.ShowUsersBadge(
             )
             Text(
                 text = if (accountBadge.current.phone.isEmpty()) "+7 (965) 781-53-08" else accountBadge.current.phone,
-                color = colorThemed { it.subtitleColor },
+                color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = dimenThemed { it.textSmall },
                 modifier = Modifier
             )

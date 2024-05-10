@@ -1,10 +1,10 @@
 package com.maksimillano.presentation.features.newsfeed.entries
 
 import androidx.compose.material.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import com.maksimillano.api.domain.model.post.Postable
-import com.maksimillano.presentation.component.colorThemed
 
 data class DividerEntry(
     val feedItem: Postable
@@ -15,7 +15,7 @@ data class DividerEntry(
     override fun onBind() {
         Divider(
             thickness = 1.dp,
-            color = colorThemed { it.dividerColor },
+            color = MaterialTheme.colorScheme.outlineVariant,
         )
     }
 }

@@ -1,6 +1,12 @@
 package com.maksimillano
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -28,8 +34,9 @@ fun MainView(componentContext: ComponentContext) {
                     FeatureConfig.Launch,
                     ComponentFabricImpl()
                 )
+                setWidthWithPadding()
                 val mainComponent = SmallRootComponent(rootComponentConfig)
-                mainComponent.render()
+                AppThemeScreen(rootComponent = mainComponent)
             }
         }
     }

@@ -1,18 +1,25 @@
 package com.maksimillano.presentation.features.newsfeed.entries
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import com.maksimillano.api.domain.model.post.Post
-import com.maksimillano.api.domain.model.post.Postable
-import com.maksimillano.presentation.component.backgroundThemed
-import com.maksimillano.presentation.component.colorThemed
 import com.maksimillano.presentation.component.dimenThemed
 import dev.icerock.moko.resources.ImageResource
 import dev.icerock.moko.resources.compose.painterResource
@@ -38,7 +45,7 @@ data class BottomEntry(
             modifier = Modifier
                 .fillMaxSize()
                 .height(60.dp)
-                .backgroundThemed { it.backgroundBarColor }
+                .background(MaterialTheme.colorScheme.surface)
                 .padding(horizontal = 14.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -88,13 +95,13 @@ data class BottomEntry(
         Row (
             modifier = modifier
                 .align(Alignment.CenterVertically)
-                .backgroundThemed(RoundedCornerShape(8.dp)) { it.iconBackground }
+                .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(8.dp))
                 .padding(horizontal = 10.dp, vertical = 6.dp),
         ) {
             Image(
                 painter = painterResource(imageResource),
                 contentDescription = description,
-                colorFilter = ColorFilter.tint(colorThemed { it.subtitleColor }),
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .size(24.dp),
@@ -102,7 +109,7 @@ data class BottomEntry(
             Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text = "$counter",
-                color = colorThemed { it.subtitleColor },
+                color = MaterialTheme.colorScheme.primary,
                 fontSize = dimenThemed { it.textSmall },
                 modifier = Modifier
                     .align(Alignment.CenterVertically)

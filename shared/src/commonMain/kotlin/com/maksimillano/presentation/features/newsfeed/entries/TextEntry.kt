@@ -1,17 +1,16 @@
 package com.maksimillano.presentation.features.newsfeed.entries
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.maksimillano.api.domain.model.post.Post
-import com.maksimillano.api.domain.model.post.Postable
-import com.maksimillano.presentation.component.backgroundThemed
-import com.maksimillano.presentation.component.colorThemed
 import com.maksimillano.presentation.component.dimenThemed
 
 data class TextEntry(
@@ -26,7 +25,7 @@ data class TextEntry(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .backgroundThemed { it.backgroundBarColor }
+                .background(MaterialTheme.colorScheme.surface)
                 .padding(
                     start = 14.dp,
                     end = 14.dp,
@@ -35,10 +34,10 @@ data class TextEntry(
         ) {
             Text(
                 text = text,
-                color = colorThemed { it.textColor },
+                color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.fillMaxWidth()
                     .align(Alignment.CenterStart)
-                    .backgroundThemed { it.backgroundBarColor },
+                    .background(MaterialTheme.colorScheme.surface),
                 fontSize = dimenThemed { it.postContent }
             )
         }

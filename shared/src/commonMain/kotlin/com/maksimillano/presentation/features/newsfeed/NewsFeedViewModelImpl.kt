@@ -36,7 +36,7 @@ class NewsFeedViewModelImpl(
     }
 
     private fun handleLoaderState(loaderState: Loader.State<PostsLoaderData>) {
-        withState {  state ->
+        withState { state ->
             state.copy(
                 feedItemEntries = dependencies.displayEntryFactory.create(loaderState.data.postHistory)
             )

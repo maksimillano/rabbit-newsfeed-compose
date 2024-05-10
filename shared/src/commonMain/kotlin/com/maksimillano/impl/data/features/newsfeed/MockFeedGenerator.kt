@@ -10,6 +10,7 @@ import com.maksimillano.impl.domain.attachment.PhotoAttachmentImpl
 import com.maksimillano.impl.domain.newsfeed.post.PostHistoryImpl
 import com.maksimillano.impl.domain.newsfeed.newsfeed.PostImpl
 import com.maksimillano.impl.domain.newsfeed.post.image.ImageSizeableImpl
+import kotlin.random.Random
 
 object MockFeedGenerator {
     fun generate(): PostHistory {
@@ -26,7 +27,32 @@ object MockFeedGenerator {
         )
         channels.add(channel)
         val feedCount = 10
+        val images = listOf(
+//            ImageSizeableImpl(657, 512, "https://free-images.com/md/e1b0/calidris_alba_bird_nature.jpg"),
+//            ImageSizeableImpl(1083, 512, "https://free-images.com/md/ca59/sunrise_sea_coast_horizon.jpg"),
+            ImageSizeableImpl(342, 512, "https://free-images.com/md/b214/sunset_sunrise_sunlight_outdoor_5.jpg"),
+            ImageSizeableImpl(342, 512, "https://free-images.com/md/b214/sunset_sunrise_sunlight_outdoor_5.jpg"),
+            ImageSizeableImpl(342, 512, "https://free-images.com/md/b214/sunset_sunrise_sunlight_outdoor_5.jpg"),
+            ImageSizeableImpl(342, 512, "https://free-images.com/md/b214/sunset_sunrise_sunlight_outdoor_5.jpg"),
+            ImageSizeableImpl(342, 512, "https://free-images.com/md/b214/sunset_sunrise_sunlight_outdoor_5.jpg"),
+            ImageSizeableImpl(342, 512, "https://free-images.com/md/b214/sunset_sunrise_sunlight_outdoor_5.jpg"),
+//            ImageSizeableImpl(341, 512, "https://free-images.com/md/f4e9/sunset_sunrise_sunlight_outdoor_4.jpg"),
+//            ImageSizeableImpl(910, 512, "https://free-images.com/md/da71/sunset_sunrise_sunlight_outdoor_1.jpg"),
+        )
+        val random = Random(12)
+        val randomPhoto = Random(2)
         repeat(feedCount) { index ->
+            val imageCount = random.nextInt(1, 11)
+            val attaches = Array(imageCount) { attachIndex ->
+                PhotoAttachmentImpl(
+                    id = attachIndex.toLong(),
+                    ownerId = 1L,
+                    date = attachIndex.toLong(),
+                    text = "",
+                    thumbnail = images.random(randomPhoto)
+                )
+            }
+
             feeds.add(
                 PostImpl(
                     id = "$index",
@@ -35,15 +61,7 @@ object MockFeedGenerator {
                     sourceId = channel.peer.publicId,
                     postId = index.toLong(),
                     owner = channel.peer,
-                    attachments = listOf(
-                        PhotoAttachmentImpl(
-                            id = index.toLong(),
-                            ownerId = 1L,
-                            date = 1L,
-                            text = "",
-                            thumbnail = ImageSizeableImpl(100, 100, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStM8VBkIAWtKmRXBRO6L2Q6luEc6e30FzH3Spk6TV-uSPTb7wPyTBCk2MfwwdhHKOjkkw&usqp=CAU")
-                        )
-                    )
+                    attachments = attaches.toList()
                 )
             )
         }

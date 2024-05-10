@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,20 +37,19 @@ fun MenuCell(
                 clickAction()
             }
     ) {
-        val painter = painterResource(iconRes)
-        Image(
-            painter = painter,
+        AppImage(
+            resource = iconRes,
             contentDescription = iconRes.asImageDesc().toString(),
             modifier = Modifier
                 .align(Alignment.CenterVertically),
             colorFilter = ColorFilter.tint(
-                colorThemed { it.textColor }
+                MaterialTheme.colorScheme.onBackground
             )
         )
 
         Text(
             text = stringValue(titleRes),
-            color = colorThemed { it.textColor },
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier

@@ -1,8 +1,10 @@
 package com.maksimillano.presentation.features.newsfeed
 
+import androidx.compose.runtime.Immutable
 import com.maksimillano.presentation.base.mvi.MviState
 import com.maksimillano.presentation.features.newsfeed.entries.FeedDisplayEntry
 
+@Immutable
 data class NewsFeedState(
     val feedItemEntries: List<FeedDisplayEntry> = emptyList(),
     val refreshStatus: RefreshStatus = RefreshStatus.Show,
