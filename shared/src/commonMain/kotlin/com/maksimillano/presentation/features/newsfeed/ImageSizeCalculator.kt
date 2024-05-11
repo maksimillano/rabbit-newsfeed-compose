@@ -3,7 +3,7 @@ package com.maksimillano.presentation.features.newsfeed
 import com.maksimillano.api.domain.model.post.image.ImageSizeable
 
 interface ImageSizeCalculator {
-    fun process(
+    fun calculate(
         thumbnails: List<ImageSizeable>,
         desiredSizesToUrl: MutableList<ImagesRow>
     )

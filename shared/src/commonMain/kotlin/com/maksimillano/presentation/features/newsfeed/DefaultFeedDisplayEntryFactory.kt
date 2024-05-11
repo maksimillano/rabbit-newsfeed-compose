@@ -102,7 +102,7 @@ class DefaultFeedDisplayEntryFactory(
             val photoAttachments = attachments.filterIsInstance<PhotoAttachment>()
 
             val imagesRows = mutableListOf<ImageSizeCalculator.ImagesRow>()
-            imageSizeCalculator.process(
+            imageSizeCalculator.calculate(
                 photoAttachments.map { it.thumbnail },
                 imagesRows
             )

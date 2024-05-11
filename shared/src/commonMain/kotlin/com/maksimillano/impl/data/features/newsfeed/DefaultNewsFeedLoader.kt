@@ -8,6 +8,8 @@ import com.maksimillano.impl.domain.newsfeed.post.PostHistoryImpl
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 class DefaultNewsFeedLoader : PostsLoader {
     private val workScope = CoroutineScope(Dispatchers.Default)
@@ -17,12 +19,25 @@ class DefaultNewsFeedLoader : PostsLoader {
     )
     override val state: StateFlow<Loader.State<PostsLoaderData>>
         get() = _data
+    private val mutex = Mutex()
+    private var page = 0
 
     override fun loadMore(loadMode: LoadMode) {
         workScope.launch {
-//            delay(2000)
-            val history = MockFeedGenerator.generate()
-            _data.tryEmit(Loader.State(PostsLoaderDataImpl(history), false))
+            if (mutex.isLocked) return@launch
+            mutex.withLock {
+                delay(2000)
+                val history = MockFeedGenerator.generate(page++)
+                val postHistory = _data.value.data.postHistory
+                val newHistory = PostHistoryImpl(
+                    postHistory.feeds + history.feeds,
+                    (postHistory.users + history.users).distinct(),
+                    (postHistory.channels + history.channels).distinct(),
+                )
+                _data.emit(
+                    Loader.State(PostsLoaderDataImpl(newHistory), false)
+                )
+            }
         }
     }
 

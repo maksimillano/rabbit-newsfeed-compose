@@ -13,7 +13,7 @@ import com.maksimillano.impl.domain.newsfeed.post.image.ImageSizeableImpl
 import kotlin.random.Random
 
 object MockFeedGenerator {
-    fun generate(): PostHistory {
+    fun generate(page: Int): PostHistory {
         val feeds: MutableList<Postable> = mutableListOf()
         val users: MutableList<User> = mutableListOf()
         val channels: MutableList<Channel> = mutableListOf()
@@ -27,21 +27,21 @@ object MockFeedGenerator {
         )
         channels.add(channel)
         val feedCount = 10
+
         val images = listOf(
-//            ImageSizeableImpl(657, 512, "https://free-images.com/md/e1b0/calidris_alba_bird_nature.jpg"),
-//            ImageSizeableImpl(1083, 512, "https://free-images.com/md/ca59/sunrise_sea_coast_horizon.jpg"),
             ImageSizeableImpl(342, 512, "https://free-images.com/md/b214/sunset_sunrise_sunlight_outdoor_5.jpg"),
-            ImageSizeableImpl(342, 512, "https://free-images.com/md/b214/sunset_sunrise_sunlight_outdoor_5.jpg"),
-            ImageSizeableImpl(342, 512, "https://free-images.com/md/b214/sunset_sunrise_sunlight_outdoor_5.jpg"),
-            ImageSizeableImpl(342, 512, "https://free-images.com/md/b214/sunset_sunrise_sunlight_outdoor_5.jpg"),
-            ImageSizeableImpl(342, 512, "https://free-images.com/md/b214/sunset_sunrise_sunlight_outdoor_5.jpg"),
-            ImageSizeableImpl(342, 512, "https://free-images.com/md/b214/sunset_sunrise_sunlight_outdoor_5.jpg"),
-//            ImageSizeableImpl(341, 512, "https://free-images.com/md/f4e9/sunset_sunrise_sunlight_outdoor_4.jpg"),
-//            ImageSizeableImpl(910, 512, "https://free-images.com/md/da71/sunset_sunrise_sunlight_outdoor_1.jpg"),
+            ImageSizeableImpl(657, 512, "https://free-images.com/md/e1b0/calidris_alba_bird_nature.jpg"),
+            ImageSizeableImpl(1083, 512, "https://free-images.com/md/ca59/sunrise_sea_coast_horizon.jpg"),
+            ImageSizeableImpl(341, 512, "https://free-images.com/md/f4e9/sunset_sunrise_sunlight_outdoor_4.jpg"),
+            ImageSizeableImpl(910, 512, "https://free-images.com/md/da71/sunset_sunrise_sunlight_outdoor_1.jpg"),
         )
+
         val random = Random(12)
         val randomPhoto = Random(2)
+
+
         repeat(feedCount) { index ->
+            val indexByPage = index + (page * feedCount)
             val imageCount = random.nextInt(1, 11)
             val attaches = Array(imageCount) { attachIndex ->
                 PhotoAttachmentImpl(
@@ -49,17 +49,17 @@ object MockFeedGenerator {
                     ownerId = 1L,
                     date = attachIndex.toLong(),
                     text = "",
-                    thumbnail = images.random(randomPhoto)
+                    thumbnail = images.getOrNull(page) ?: images.first()
                 )
             }
 
             feeds.add(
                 PostImpl(
-                    id = "$index",
-                    date = index.toLong(),
-                    text = "Some text $index",
+                    id = "$indexByPage",
+                    date = indexByPage.toLong(),
+                    text = "Some text $indexByPage",
                     sourceId = channel.peer.publicId,
-                    postId = index.toLong(),
+                    postId = indexByPage.toLong(),
                     owner = channel.peer,
                     attachments = attaches.toList()
                 )

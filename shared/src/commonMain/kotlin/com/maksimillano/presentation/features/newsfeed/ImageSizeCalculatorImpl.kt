@@ -7,7 +7,7 @@ class ImageSizeCalculatorImpl(private val photoMaxWidthProvider: () -> Int) : Im
     private val MAX_RATIO = 1.5F
     private val MIN_RATIO = 0.66F
 
-    override fun process(
+    override fun calculate(
         thumbnails: List<ImageSizeable>,
         desiredSizesToUrl: MutableList<ImageSizeCalculator.ImagesRow>
     ) {
