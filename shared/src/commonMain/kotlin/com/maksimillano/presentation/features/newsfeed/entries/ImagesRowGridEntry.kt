@@ -1,11 +1,13 @@
 package com.maksimillano.presentation.features.newsfeed.entries
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,7 +32,9 @@ data class ImagesRowGridEntry(
                 .fillMaxWidth()
                 .height(imagesRow.height.pxToDpValue(LocalDensity.current))
                 .padding(horizontal = Dimens.postMargin)
-                .clip( RoundedCornerShape(topStart = Dimens.postImageCornerRadius, topEnd = Dimens.postImageCornerRadius, bottomStart = Dimens.postImageCornerRadius, bottomEnd = Dimens.postImageCornerRadius))
+                .background(MaterialTheme.colorScheme.surface)
+                .padding(horizontal = Dimens.postPadding)
+                .clip(RoundedCornerShape(topStart = Dimens.postCardCornerRadius, topEnd = Dimens.postCardCornerRadius, bottomStart = Dimens.postCardCornerRadius, bottomEnd = Dimens.postCardCornerRadius))
         ) {
             val firstImage = imagesRow.left
             val secondImage = imagesRow.topRight

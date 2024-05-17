@@ -1,5 +1,6 @@
 package com.maksimillano.presentation.features.newsfeed
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -70,6 +71,7 @@ fun FeedList(
         modifier = Modifier
             .nestedScroll(nestedScrollConnection)
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     ) {
         items(
             state.feedItemEntries,

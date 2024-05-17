@@ -44,7 +44,7 @@ fun DrawerNavigationPanel(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.secondary)
     ) {
         DrawerAppBar(state, updateTheme, accountSelect, anotherAccountSelect)
         DrawerItemsList(state, menuSelect)

@@ -39,7 +39,6 @@ object MockFeedGenerator {
         val random = Random(12)
         val randomPhoto = Random(2)
 
-
         repeat(feedCount) { index ->
             val indexByPage = index + (page * feedCount)
             val imageCount = random.nextInt(1, 11)
@@ -57,7 +56,7 @@ object MockFeedGenerator {
                 PostImpl(
                     id = "$indexByPage",
                     date = indexByPage.toLong(),
-                    text = "Some text $indexByPage",
+                    text = "Some text g $indexByPage",
                     sourceId = channel.peer.publicId,
                     postId = indexByPage.toLong(),
                     owner = channel.peer,

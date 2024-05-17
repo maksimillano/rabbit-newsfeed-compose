@@ -1,15 +1,24 @@
 package com.maksimillano.util
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-fun Int.pxToDp(density: Density): Int {
-    return (this / density.density).toInt()
+@Composable
+fun Int.pxToDp(): Dp {
+    return (this / LocalDensity.current.density).toInt().dp
 }
 
-fun Float.pxToDp(density: Density): Int {
-    return (this / density.density).toInt()
+@Composable
+fun Float.pxToDp(): Dp {
+    return (this / LocalDensity.current.density).toInt().dp
+}
+
+@Composable
+fun Dp.dpToPx(): Int {
+    return (this.value * LocalDensity.current.density).toInt()
 }
 
 fun Int.pxToDpValue(density: Density): Dp {

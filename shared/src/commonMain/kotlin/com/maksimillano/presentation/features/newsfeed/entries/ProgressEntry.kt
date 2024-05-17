@@ -1,5 +1,6 @@
 package com.maksimillano.presentation.features.newsfeed.entries
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,6 +21,7 @@ data class ProgressEntry(
         Box(
             modifier = Modifier.height(50.dp)
                 .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.background)
         ) {
             CircularProgressIndicator(
                 color = MaterialTheme.colorScheme.tertiary,

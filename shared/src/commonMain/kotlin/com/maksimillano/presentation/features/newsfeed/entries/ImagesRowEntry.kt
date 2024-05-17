@@ -1,10 +1,12 @@
 package com.maksimillano.presentation.features.newsfeed.entries
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,15 +29,17 @@ data class ImagesRowEntry(
     @Composable
     override fun onBind() {
         val imageShape = when (entryPart) {
-            is EntryPart.Full -> RoundedCornerShape(topStart = Dimens.postImageCornerRadius, topEnd = Dimens.postImageCornerRadius, bottomStart = Dimens.postImageCornerRadius, bottomEnd = Dimens.postImageCornerRadius)
-            is EntryPart.Top -> RoundedCornerShape(topStart = Dimens.postImageCornerRadius, topEnd = Dimens.postImageCornerRadius)
+            is EntryPart.Full -> RoundedCornerShape(topStart = Dimens.postCardCornerRadius, topEnd = Dimens.postCardCornerRadius, bottomStart = Dimens.postCardCornerRadius, bottomEnd = Dimens.postCardCornerRadius)
+            is EntryPart.Top -> RoundedCornerShape(topStart = Dimens.postCardCornerRadius, topEnd = Dimens.postCardCornerRadius)
             is EntryPart.Middle -> RoundedCornerShape(topStart = 0.dp, topEnd = 0.dp, bottomStart = 0.dp, bottomEnd = 0.dp)
-            is EntryPart.Bottom -> RoundedCornerShape(bottomStart = Dimens.postImageCornerRadius, bottomEnd = Dimens.postImageCornerRadius)
+            is EntryPart.Bottom -> RoundedCornerShape(bottomStart = Dimens.postCardCornerRadius, bottomEnd = Dimens.postCardCornerRadius)
         }
         Row(
             modifier = Modifier.fillMaxWidth()
                 .height(imagesRow.height.pxToDpValue(LocalDensity.current))
                 .padding(horizontal = Dimens.postMargin)
+                .background(MaterialTheme.colorScheme.surface)
+                .padding(horizontal = Dimens.postPadding)
                 .clip(imageShape)
         ) {
             for (imageSpec in imagesRow.images) {

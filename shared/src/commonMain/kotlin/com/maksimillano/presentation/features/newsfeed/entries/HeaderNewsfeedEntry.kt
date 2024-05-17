@@ -1,5 +1,6 @@
 package com.maksimillano.presentation.features.newsfeed.entries
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -23,7 +25,7 @@ import com.maksimillano.api.domain.model.post.Post
 import com.maksimillano.presentation.component.AppImage
 import com.maksimillano.presentation.theme.Dimens
 
-data class HeaderEntry(
+data class HeaderNewsfeedEntry(
     private val title: String,
     private val iconUrl: String,
     private val dateFormatted: String,
@@ -34,11 +36,17 @@ data class HeaderEntry(
 
     @Composable
     override fun onBind() {
+        val cornerShape = RoundedCornerShape(
+            topStart = Dimens.postCardCornerRadius,
+            topEnd = Dimens.postCardCornerRadius
+        )
         Row(
             modifier = Modifier.fillMaxWidth()
-                .height(Dimens.postHeaderBarHeight)
-//                .backgroundThemed { it.backgroundBarColor }
-                .padding(horizontal = Dimens.postMargin),
+                .height(Dimens.postHeaderNewsfeedBarHeight)
+                .padding(horizontal = Dimens.postMargin)
+                .background(MaterialTheme.colorScheme.surface, cornerShape)
+                .padding(horizontal = Dimens.postPadding)
+            ,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
@@ -63,7 +71,7 @@ data class HeaderEntry(
                 Text(
                     text = title,
                     color = MaterialTheme.colorScheme.onPrimary,
-//                    fontSize = dimenThemed { it.postTitle },
+                    fontSize = Dimens.postHeaderNewsfeedTitle,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     fontWeight = FontWeight.Bold,
@@ -74,8 +82,8 @@ data class HeaderEntry(
 
                 Text(
                     dateFormatted,
-//                    color = colorThemed { it.subtitleColor },
-//                    fontSize = dimenThemed { it.hint },
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontSize = Dimens.postHeaderTime,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                 )
