@@ -5,7 +5,7 @@ import kotlinx.coroutines.launch
 
 abstract class BaseMviViewModel<STATE : MviState, EVENT : MviEvent, NAVIGATION : MviNavigationEvent, VIEW_ACTION : MviViewAction>(
     private val initialState: STATE
-) : MviViewModel<STATE, EVENT, NAVIGATION, VIEW_ACTION> {
+) : MviViewModel<STATE, EVENT, NAVIGATION, VIEW_ACTION>() {
     private val _navigationEvents: MutableSharedFlow<NAVIGATION> = MutableSharedFlow()
     private val _viewActions: MutableSharedFlow<VIEW_ACTION> = MutableSharedFlow()
     private val _state: MutableStateFlow<STATE> = MutableStateFlow(initialState)
