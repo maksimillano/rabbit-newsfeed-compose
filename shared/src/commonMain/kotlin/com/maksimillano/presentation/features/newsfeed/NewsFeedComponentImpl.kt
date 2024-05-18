@@ -2,10 +2,10 @@ package com.maksimillano.presentation.features.newsfeed
 
 import androidx.compose.runtime.Composable
 import com.arkivanov.essenty.instancekeeper.getOrCreate
-import com.maksimillano.localPostTextStyleProvider
-import com.maksimillano.localPostWidthProvider
-import com.maksimillano.localTextMeasurerProvider
 import com.maksimillano.presentation.base.ContextWrapper
+import com.maksimillano.util.localPostTextStyleProvider
+import com.maksimillano.util.localPostWidthProvider
+import com.maksimillano.util.localTextMeasurerProvider
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.parameter.parametersOf

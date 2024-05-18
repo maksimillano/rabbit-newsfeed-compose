@@ -10,10 +10,9 @@ import com.maksimillano.presentation.base.RenderComponent
 import com.maksimillano.presentation.component.AppTheme
 import com.maksimillano.presentation.theme.Dimens
 import com.maksimillano.util.getScreenSizeInfo
-
-var localPostWidthProvider: () -> Int = { 0 }
-var localPostTextStyleProvider: () -> TextStyle = { TextStyle() }
-lateinit var localTextMeasurerProvider: TextMeasurer
+import com.maksimillano.util.localPostTextStyleProvider
+import com.maksimillano.util.localPostWidthProvider
+import com.maksimillano.util.localTextMeasurerProvider
 
 @Composable
 fun setWidthWithPadding() {
