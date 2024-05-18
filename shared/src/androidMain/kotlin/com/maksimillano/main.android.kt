@@ -16,6 +16,7 @@ import com.maksimillano.presentation.features.ComponentFabricImpl
 import com.maksimillano.presentation.features.FeatureConfig
 import com.maksimillano.presentation.features.root.RootComponentConfigImpl
 import com.maksimillano.presentation.features.root.impl.SmallRootComponent
+import com.maksimillano.util.setWidthWithPadding
 
 @Composable
 fun MainView(componentContext: ComponentContext) {
