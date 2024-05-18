@@ -12,7 +12,7 @@ class NewsFeedViewModelImpl(
 
     init {
         observeNewsfeed()
-        dependencies.newsfeedLoader.loadMore(LoadMode.Latest)
+        dependencies.newsfeedLoader.loadMore(LoadMode.Before(dependencies.pageItemsCount))
     }
 
     private fun observeNewsfeed() {

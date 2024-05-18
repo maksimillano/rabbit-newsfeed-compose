@@ -7,6 +7,7 @@ interface NewsFeedDependencies {
     val displayEntryFactory: NewsFeedDisplayEntryFactory
     val newsfeedLoader: Loader<PostsLoaderData>
     val postInteractor: PostInteractor
+    val pageItemsCount: Int
 
     interface PostInteractor {
         fun savePost(postId: Long, channelId: Long)

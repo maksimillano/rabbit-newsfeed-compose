@@ -9,6 +9,7 @@ class NewsFeedDependenciesImpl(
     override val displayEntryFactory = feedDisplayEntryFactory
     override val newsfeedLoader = DefaultNewsFeedLoader()
     override val postInteractor = PostInteractorImpl()
+    override val pageItemsCount: Int = 25
 
     class PostInteractorImpl : NewsFeedDependencies.PostInteractor {
         override fun savePost(postId: Long, channelId: Long) {
