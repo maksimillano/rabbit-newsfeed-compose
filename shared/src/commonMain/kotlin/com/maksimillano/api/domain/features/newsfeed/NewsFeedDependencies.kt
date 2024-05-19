@@ -1,11 +1,10 @@
 package com.maksimillano.api.domain.features.newsfeed
 
-import com.maksimillano.api.domain.features.post.PostsLoaderData
-import com.maksimillano.api.domain.loader.Loader
+import com.maksimillano.api.domain.features.post.PostsLoader
 
 interface NewsFeedDependencies {
     val displayEntryFactory: NewsFeedDisplayEntryFactory
-    val newsfeedLoader: Loader<PostsLoaderData>
+    val newsfeedLoader: PostsLoader
     val pageItemsCount: Int
 
     val savePostInteractor: SavePostInteractor
