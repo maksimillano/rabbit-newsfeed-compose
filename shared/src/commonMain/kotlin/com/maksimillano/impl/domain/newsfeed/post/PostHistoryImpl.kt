@@ -9,7 +9,7 @@ data class PostHistoryImpl(
     override val feeds: List<Postable> = emptyList(),
     override val users: List<User> = emptyList(),
     override val channels: List<Channel> = emptyList(),
-    override val hasAfter: Boolean = true,
+    override val hasAfter: Boolean = false,
     override val hasBefore: Boolean = true
 ) : PostHistory {
     fun isEmpty() = feeds.isEmpty()

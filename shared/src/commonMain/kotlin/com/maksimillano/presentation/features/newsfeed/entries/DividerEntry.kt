@@ -8,9 +8,9 @@ import com.maksimillano.api.domain.model.post.Postable
 import com.maksimillano.presentation.theme.Dimens
 
 data class DividerEntry(
-    val post: Postable
+    val id: String
 ) : FeedDisplayEntry {
-    override val key: String = "Divider${post.id}-${post.sourceId}"
+    override val key: String = "Divider$id"
 
     @Composable
     override fun onBind() {

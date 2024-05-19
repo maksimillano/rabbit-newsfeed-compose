@@ -28,18 +28,21 @@ class DefaultFeedDisplayEntryFactory(
         Logger.i(BuildConstants.LOGGER_TAG) { "Creating entries: $feedHistory" }
         val feedDisplayEntries: MutableList<FeedDisplayEntry> = mutableListOf()
 
-        if (feedHistory.hasBefore) {
+        feedDisplayEntries.add(DividerEntry(DIVIDER_TOP_ID))
+        if (feedHistory.hasAfter) {
             feedDisplayEntries.add(ProgressEntry(ProgressEntry.Gravity.TOP))
         }
 
         feedHistory.feeds.forEachIndexed { index, post ->
             createFeedDisplayEntry(feedDisplayEntries, post, feedHistory)
-            feedDisplayEntries.add(DividerEntry(post))
+            val dividerId = "${post.id}-${post.sourceId}"
+            feedDisplayEntries.add(DividerEntry(dividerId))
         }
 
-        if (feedHistory.hasAfter) {
+        if (feedHistory.hasBefore) {
             feedDisplayEntries.add(ProgressEntry(ProgressEntry.Gravity.BOTTOM))
         }
+        feedDisplayEntries.add(DividerEntry(DIVIDER_BOTTOM_ID))
 
         return feedDisplayEntries
     }
@@ -172,4 +175,9 @@ class DefaultFeedDisplayEntryFactory(
         val name: String,
         val photo: String
     )
+
+    private companion object {
+        const val DIVIDER_TOP_ID = "_TOP"
+        const val DIVIDER_BOTTOM_ID = "_BOTTOM"
+    }
 }
