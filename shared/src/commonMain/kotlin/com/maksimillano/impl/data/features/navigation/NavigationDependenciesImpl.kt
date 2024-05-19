@@ -17,16 +17,16 @@ class NavigationDependenciesImpl(userPreferences: UserPreferences, themeSupplier
     override val menuItemsIterator = MenuItemsInteractorImpl()
 
     class SwitchThemeInteractorImpl(private val themeSupplier: ThemeSupplierImpl) : NavigationDependencies.SwitchThemeInteractor {
-        override fun execute() {
+        override suspend fun execute() {
             themeSupplier.updateTheme()
         }
     }
     class SwitchAccountInteractorImpl : NavigationDependencies.SwitchAccountInteractor {
-        override fun execute(number: Int) {
+        override suspend fun execute(number: Int) {
         }
     }
     class LogoutInteractorImpl : NavigationDependencies.LogoutInteractor {
-        override fun execute() {
+        override suspend fun execute() {
         }
     }
     class MenuItemsInteractorImpl : NavigationDependencies.MenuItemsInteractor {

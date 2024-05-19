@@ -7,7 +7,7 @@ import com.maksimillano.presentation.features.newsfeed.entries.FeedDisplayEntry
 @Immutable
 data class NewsFeedState(
     val feedItemEntries: List<FeedDisplayEntry> = emptyList(),
-    val refreshStatus: RefreshStatus = RefreshStatus.Show,
+    val refreshStatus: RefreshStatus = RefreshStatus.Missing,
     val updateNotification: UpdateNotification = UpdateNotification.Missing
 ) : MviState
 

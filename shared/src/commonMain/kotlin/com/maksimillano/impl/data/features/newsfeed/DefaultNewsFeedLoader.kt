@@ -1,15 +1,19 @@
 package com.maksimillano.impl.data.features.newsfeed
 
-import com.maksimillano.api.domain.loader.LoadMode
-import com.maksimillano.api.domain.loader.Loader
 import com.maksimillano.api.domain.features.post.PostsLoader
 import com.maksimillano.api.domain.features.post.PostsLoaderData
+import com.maksimillano.api.domain.loader.LoadMode
+import com.maksimillano.api.domain.loader.Loader
 import com.maksimillano.api.domain.model.post.Post
 import com.maksimillano.api.domain.model.post.PostHistory
 import com.maksimillano.impl.domain.newsfeed.post.PostHistoryImpl
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -20,7 +24,22 @@ class DefaultNewsFeedLoader : PostsLoader {
         Loader.State(PostsLoaderDataImpl(PostHistoryImpl()), true)
     )
 
-    override fun onRefresh(posts: PostHistory) {
+    override fun onRefresh(refreshHistory: PostHistory) {
+        workScope.launch {
+            mutex.withLock {
+                delay(SIMULATE_LOAD_DELAY)
+
+                val postHistory = _data.value.data.postHistory
+                val newHistory = PostHistoryImpl(
+                    refreshHistory.feeds + postHistory.feeds,
+                    (refreshHistory.users + postHistory.users).distinct(),
+                    (refreshHistory.channels + postHistory.channels).distinct(),
+                )
+                _data.emit(
+                    Loader.State(PostsLoaderDataImpl(newHistory), false)
+                )
+            }
+        }
     }
 
     override fun onUpdate(posts: List<Post>) {
@@ -35,7 +54,7 @@ class DefaultNewsFeedLoader : PostsLoader {
         workScope.launch {
             if (mutex.isLocked) return@launch
             mutex.withLock {
-                delay(2000)
+                delay(SIMULATE_LOAD_DELAY)
                 val history = MockFeedGenerator.generate(page++)
                 val postHistory = _data.value.data.postHistory
                 val newHistory = PostHistoryImpl(
@@ -58,5 +77,9 @@ class DefaultNewsFeedLoader : PostsLoader {
     }
 
     override fun resetAndLoad() {
+    }
+
+    private companion object {
+        const val SIMULATE_LOAD_DELAY = 2000L
     }
 }

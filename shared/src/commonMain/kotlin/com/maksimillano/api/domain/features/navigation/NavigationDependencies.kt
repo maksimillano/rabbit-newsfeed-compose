@@ -13,13 +13,13 @@ interface NavigationDependencies {
     val menuItemsIterator: MenuItemsInteractor
 
     interface SwitchThemeInteractor {
-        fun execute()
+        suspend fun execute()
     }
     interface SwitchAccountInteractor {
-        fun execute(number: Int)
+        suspend fun execute(number: Int)
     }
     interface LogoutInteractor {
-        fun execute()
+        suspend fun execute()
     }
     interface MenuItemsInteractor {
         fun execute(): List<NavigationMenuItem>

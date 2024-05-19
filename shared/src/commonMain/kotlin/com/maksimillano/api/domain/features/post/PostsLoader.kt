@@ -5,6 +5,6 @@ import com.maksimillano.api.domain.model.post.Post
 import com.maksimillano.api.domain.model.post.PostHistory
 
 interface PostsLoader : Loader<PostsLoaderData> {
-    fun onRefresh(posts: PostHistory)
+    fun onRefresh(refreshHistory: PostHistory)
     fun onUpdate(posts: List<Post>)
 }

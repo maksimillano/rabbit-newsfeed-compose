@@ -4,7 +4,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 object Dimens {
-    val postCardCornerRadius = 20.dp
+    val postCardCornerRadius = 8.dp
     val postImageThumbCornerRadius = 4.dp
 
     val postMargin = 14.dp

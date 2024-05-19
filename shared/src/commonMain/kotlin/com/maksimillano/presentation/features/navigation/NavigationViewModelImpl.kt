@@ -48,7 +48,9 @@ class NavigationViewModelImpl(
                 }
             }
             is NavigationMviEvent.Logout -> {
-                dependencies.logoutInteractor.execute()
+                launch {
+                    dependencies.logoutInteractor.execute()
+                }
             }
             is NavigationMviEvent.OnMenuClick -> {
                 // track stat

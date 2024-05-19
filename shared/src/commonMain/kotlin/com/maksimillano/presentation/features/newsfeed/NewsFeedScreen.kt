@@ -27,9 +27,10 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 @Composable
 fun NewsFeedScreen(newsFeedComponent: NewsFeedComponent) {
     val state by newsFeedComponent.viewModel.state.collectAsState()
+    val isRefreshing = state.refreshStatus == RefreshStatus.Show
     val pullRefreshState = rememberPullRefreshState(
-        refreshing = state.refreshStatus == RefreshStatus.Show,
-        onRefresh = { newsFeedComponent.viewModel.onNewEvent(NewsFeedMviEvent.LoadLatest) }
+        refreshing = isRefreshing,
+        onRefresh = { newsFeedComponent.viewModel.onNewEvent(NewsFeedMviEvent.RefreshPage) }
     )
 
     Box(
@@ -37,7 +38,7 @@ fun NewsFeedScreen(newsFeedComponent: NewsFeedComponent) {
     ) {
         FeedList(newsFeedComponent, state)
         PullRefreshIndicator(
-            refreshing = state.refreshStatus == RefreshStatus.Show,
+            refreshing = isRefreshing,
             state = pullRefreshState,
             contentColor = MaterialTheme.colorScheme.tertiary,
             modifier = Modifier.align(Alignment.TopCenter)

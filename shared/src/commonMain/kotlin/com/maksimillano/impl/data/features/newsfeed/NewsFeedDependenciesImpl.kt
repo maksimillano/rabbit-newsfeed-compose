@@ -2,6 +2,7 @@ package com.maksimillano.impl.data.features.newsfeed
 
 import com.maksimillano.api.domain.features.newsfeed.NewsFeedDependencies
 import com.maksimillano.api.domain.features.newsfeed.NewsFeedDisplayEntryFactory
+import kotlinx.coroutines.delay
 
 class NewsFeedDependenciesImpl(
     feedDisplayEntryFactory: NewsFeedDisplayEntryFactory
@@ -14,26 +15,28 @@ class NewsFeedDependenciesImpl(
     override val setReactionInteractor = SetReactionInteractorImpl()
     override val unsetReactionInteractor = UnsetReactionInteractorImpl()
     override val updatePostsInteractor = UpdatePostsInteractorImpl()
-    override val refreshPostsInteractor = RefreshPostsInteractorImpl()
+    override val refreshPostsInteractor = RefreshPostsInteractorImpl(newsfeedLoader)
 
     class SavePostInteractorImpl : NewsFeedDependencies.SavePostInteractor {
-        override fun execute(postId: Long, channelId: Long) {
+        override suspend fun execute(postId: Long, channelId: Long) {
         }
     }
     class SetReactionInteractorImpl : NewsFeedDependencies.SetReactionInteractor {
-        override fun execute(postId: Long, channelId: Long, reaction: Int) {
+        override suspend fun execute(postId: Long, channelId: Long, reaction: Int) {
         }
     }
     class UnsetReactionInteractorImpl : NewsFeedDependencies.UnsetReactionInteractor {
-        override fun execute(postId: Long, channelId: Long) {
+        override suspend fun execute(postId: Long, channelId: Long) {
         }
     }
     class UpdatePostsInteractorImpl : NewsFeedDependencies.UpdatePostsInteractor {
-        override fun execute(postsIds: List<Long>) {
+        override suspend fun execute(postsIds: List<Long>) {
         }
     }
-    class RefreshPostsInteractorImpl : NewsFeedDependencies.RefreshPostsInteractor {
-        override fun execute() {
+    class RefreshPostsInteractorImpl(private val newsfeedLoader: DefaultNewsFeedLoader) : NewsFeedDependencies.RefreshPostsInteractor {
+        override suspend fun execute() {
+            val freshPage = 1
+            newsfeedLoader.onRefresh(MockFeedGenerator.generate(freshPage))
         }
     }
 }

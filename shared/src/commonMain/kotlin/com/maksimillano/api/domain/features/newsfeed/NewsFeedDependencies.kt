@@ -14,18 +14,18 @@ interface NewsFeedDependencies {
     val refreshPostsInteractor: RefreshPostsInteractor
 
     interface SavePostInteractor {
-        fun execute(postId: Long, channelId: Long)
+        suspend fun execute(postId: Long, channelId: Long)
     }
     interface SetReactionInteractor {
-        fun execute(postId: Long, channelId: Long, reaction: Int)
+        suspend fun execute(postId: Long, channelId: Long, reaction: Int)
     }
     interface UnsetReactionInteractor {
-        fun execute(postId: Long, channelId: Long)
+        suspend fun execute(postId: Long, channelId: Long)
     }
     interface UpdatePostsInteractor {
-        fun execute(postsIds: List<Long>)
+        suspend fun execute(postsIds: List<Long>)
     }
     interface RefreshPostsInteractor {
-        fun execute()
+        suspend fun execute()
     }
 }
