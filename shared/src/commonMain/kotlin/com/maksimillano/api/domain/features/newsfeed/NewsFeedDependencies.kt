@@ -6,12 +6,27 @@ import com.maksimillano.api.domain.loader.Loader
 interface NewsFeedDependencies {
     val displayEntryFactory: NewsFeedDisplayEntryFactory
     val newsfeedLoader: Loader<PostsLoaderData>
-    val postInteractor: PostInteractor
     val pageItemsCount: Int
 
-    interface PostInteractor {
-        fun savePost(postId: Long, channelId: Long)
-        fun setReaction(postId: Long, channelId: Long, reaction: Int)
-        fun unsetReaction(postId: Long, channelId: Long)
+    val savePostInteractor: SavePostInteractor
+    val setReactionInteractor: SetReactionInteractor
+    val unsetReactionInteractor: UnsetReactionInteractor
+    val updatePostsInteractor: UpdatePostsInteractor
+    val refreshPostsInteractor: RefreshPostsInteractor
+
+    interface SavePostInteractor {
+        fun execute(postId: Long, channelId: Long)
+    }
+    interface SetReactionInteractor {
+        fun execute(postId: Long, channelId: Long, reaction: Int)
+    }
+    interface UnsetReactionInteractor {
+        fun execute(postId: Long, channelId: Long)
+    }
+    interface UpdatePostsInteractor {
+        fun execute(postsIds: List<Long>)
+    }
+    interface RefreshPostsInteractor {
+        fun execute()
     }
 }

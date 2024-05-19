@@ -29,9 +29,13 @@ class NewsFeedViewModelImpl(
             is NewsFeedMviEvent.LoadLatest -> dependencies.newsfeedLoader.loadMore(LoadMode.Latest)
             is NewsFeedMviEvent.LoadBefore -> dependencies.newsfeedLoader.loadMore(LoadMode.Before(CHUNK_SIZE))
             is NewsFeedMviEvent.LoadSince -> dependencies.newsfeedLoader.loadMore(LoadMode.Since(CHUNK_SIZE))
-            is NewsFeedMviEvent.SetReaction -> dependencies.postInteractor.setReaction(event.post, event.channel, event.reaction)
-            is NewsFeedMviEvent.UnsetReaction -> dependencies.postInteractor.unsetReaction(event.post, event.channel)
-            is NewsFeedMviEvent.SaveToFavorites -> dependencies.postInteractor.savePost(event.post, event.channel)
+            is NewsFeedMviEvent.SetReaction -> dependencies.setReactionInteractor.execute(event.post, event.channel, event.reaction)
+            is NewsFeedMviEvent.UnsetReaction -> dependencies.unsetReactionInteractor.execute(event.post, event.channel)
+            is NewsFeedMviEvent.SaveToFavorites -> dependencies.savePostInteractor.execute(event.post, event.channel)
+            is NewsFeedMviEvent.RefreshPage -> dependencies.refreshPostsInteractor.execute()
+            is NewsFeedMviEvent.UpdatePosts -> {
+                // dependencies.updatePostsInteractor.execute() todo: access history and pass history by range
+            }
         }
     }
 

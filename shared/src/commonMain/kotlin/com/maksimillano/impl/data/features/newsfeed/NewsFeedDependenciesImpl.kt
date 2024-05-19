@@ -8,17 +8,32 @@ class NewsFeedDependenciesImpl(
 ) : NewsFeedDependencies {
     override val displayEntryFactory = feedDisplayEntryFactory
     override val newsfeedLoader = DefaultNewsFeedLoader()
-    override val postInteractor = PostInteractorImpl()
     override val pageItemsCount: Int = 25
 
-    class PostInteractorImpl : NewsFeedDependencies.PostInteractor {
-        override fun savePost(postId: Long, channelId: Long) {
-        }
+    override val savePostInteractor = SavePostInteractorImpl()
+    override val setReactionInteractor = SetReactionInteractorImpl()
+    override val unsetReactionInteractor = UnsetReactionInteractorImpl()
+    override val updatePostsInteractor = UpdatePostsInteractorImpl()
+    override val refreshPostsInteractor = RefreshPostsInteractorImpl()
 
-        override fun setReaction(postId: Long, channelId: Long, reaction: Int) {
+    class SavePostInteractorImpl : NewsFeedDependencies.SavePostInteractor {
+        override fun execute(postId: Long, channelId: Long) {
         }
-
-        override fun unsetReaction(postId: Long, channelId: Long) {
+    }
+    class SetReactionInteractorImpl : NewsFeedDependencies.SetReactionInteractor {
+        override fun execute(postId: Long, channelId: Long, reaction: Int) {
+        }
+    }
+    class UnsetReactionInteractorImpl : NewsFeedDependencies.UnsetReactionInteractor {
+        override fun execute(postId: Long, channelId: Long) {
+        }
+    }
+    class UpdatePostsInteractorImpl : NewsFeedDependencies.UpdatePostsInteractor {
+        override fun execute(postsIds: List<Long>) {
+        }
+    }
+    class RefreshPostsInteractorImpl : NewsFeedDependencies.RefreshPostsInteractor {
+        override fun execute() {
         }
     }
 }
