@@ -4,6 +4,8 @@ import com.maksimillano.api.domain.loader.LoadMode
 import com.maksimillano.api.domain.loader.Loader
 import com.maksimillano.api.domain.features.post.PostsLoader
 import com.maksimillano.api.domain.features.post.PostsLoaderData
+import com.maksimillano.api.domain.model.post.Post
+import com.maksimillano.api.domain.model.post.PostHistory
 import com.maksimillano.impl.domain.newsfeed.post.PostHistoryImpl
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +19,13 @@ class DefaultNewsFeedLoader : PostsLoader {
     private val _data: MutableStateFlow<Loader.State<PostsLoaderData>> = MutableStateFlow(
         Loader.State(PostsLoaderDataImpl(PostHistoryImpl()), true)
     )
+
+    override fun onRefresh(posts: PostHistory) {
+    }
+
+    override fun onUpdate(posts: List<Post>) {
+    }
+
     override val state: StateFlow<Loader.State<PostsLoaderData>>
         get() = _data
     private val mutex = Mutex()
