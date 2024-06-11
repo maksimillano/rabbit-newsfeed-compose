@@ -4,6 +4,6 @@ interface TextCalculator {
     fun calculate(text: String): List<TextResult>
     data class TextResult(
         val text: String,
-        val height: Int
+        val height: Float
     )
 }

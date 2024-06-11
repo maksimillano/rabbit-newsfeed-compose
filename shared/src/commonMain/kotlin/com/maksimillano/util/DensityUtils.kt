@@ -13,7 +13,7 @@ fun Int.pxToDp(): Dp {
 
 @Composable
 fun Float.pxToDp(): Dp {
-    return (this / LocalDensity.current.density).toInt().dp
+    return (this / LocalDensity.current.density).dp
 }
 
 @Composable

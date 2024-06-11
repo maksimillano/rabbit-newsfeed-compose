@@ -21,7 +21,7 @@ import com.maksimillano.util.pxToDp
 data class TextEntry(
     private val text: String,
     private val post: Post,
-    private val height: Int,
+    private val height: Float,
     private val textPart: EntryPart,
 ) : FeedDisplayEntry {
 

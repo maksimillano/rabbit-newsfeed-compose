@@ -11,11 +11,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.maksimillano.presentation.features.newsfeed.TextCalculator
@@ -29,23 +33,31 @@ fun TextCalculatorTest() {
     val width = 100.dp
     val textMeasurer = rememberTextMeasurer()
     val dpToPx = width.dpToPx()
+    val lineHeight = 14.sp
     val style = TextStyle(
-        fontSize = 14.sp,
-        color = Color(0xFF2B2B2B),
+        fontSize = lineHeight,
+        color = Color(0xFF1F2966),
         background = Color(0xFFC7CFFF),
         textIndent = TextIndent(),
-        lineHeightStyle = LineHeightStyle(
-            trim = LineHeightStyle.Trim.None,
-            alignment = LineHeightStyle.Alignment.Top
-        )
+        platformStyle = PlatformTextStyle(
+            includeFontPadding = false
+        ),
+//        lineHeightStyle = LineHeightStyle(
+//            trim = LineHeightStyle.Trim.FirstLineTop,
+//            alignment = LineHeightStyle.Alignment.Center
+//        )
     )
-    val text = "The scroll amount can be obtained, no calculation required, in the items themselves, by attaching an onGloballyPosition{ it.positionInParent()} modifier to one or more items. Then, the items can do what they need to do with their own scroll position, such as offsetting some screen-drawing y coordinate"
+    val text =
+        "The scroll amount can be obtained, no calculation required, in the items themselves, by attaching an onGloballyPosition{ it.positionInParent()} modifier to one or more items. Then, the items can do what they need to do with their own scroll position, such as offsetting some screen-drawing y coordinate"
+    // val density = LocalDensity.current.density
+    // val scale = LocalDensity.current.fontScale
     val textCalculator: TextCalculator = remember {
         val config = TextCalculatorImpl.TextCalculatorConfig(
             textMeasurer = textMeasurer,
             widthProvider = { dpToPx },
             textStyleProvider = { style },
-            maxLineEntry = 4
+            maxLineEntry = 4,
+            lineTextProvider = { 54f }
         )
         TextCalculatorImpl(config)
     }
@@ -56,9 +68,21 @@ fun TextCalculatorTest() {
     Row(modifier = Modifier.fillMaxWidth()) {
         Text(text = text, style = style, modifier = Modifier
             .width(width)
-            .background(Color.Red))
+            .background(Color.Red)
+            .onSizeChanged {
+                val height = it.height
+                val lineH = height / 22
+                println(lineH)
+            }
+        )
 
-        Column {
+        Column(
+            modifier = Modifier
+                .onSizeChanged {
+                    val height = it.height
+                    println()
+                }
+        ) {
             strings.forEach { textResult ->
                 Text(text = textResult.text, style = style,
                     modifier = Modifier
@@ -69,4 +93,10 @@ fun TextCalculatorTest() {
         }
     }
 
+}
+
+// sp(TextUnit) → px(Float)
+@Composable
+internal fun TextUnit.spToPx(): Float {
+    return this.value * LocalDensity.current.fontScale
 }

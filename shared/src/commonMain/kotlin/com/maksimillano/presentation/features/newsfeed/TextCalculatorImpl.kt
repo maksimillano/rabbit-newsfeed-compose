@@ -11,14 +11,15 @@ class TextCalculatorImpl(
     private val config: TextCalculatorConfig
 ) : TextCalculator {
     override fun calculate(text: String): List<TextCalculator.TextResult> {
+        val style = config.textStyleProvider()
         val measureResults = config.textMeasurer.measure(
             text = text,
-            style = config.textStyleProvider(),
+            style = style,
             constraints = Constraints.fixedWidth(config.widthProvider())
         )
         val entriesCount = ceil(measureResults.lineCount.toFloat() / config.maxLineEntry).roundToInt()
 
-        val lineHeight = measureResults.size.height / measureResults.lineCount
+        val lineHeight: Float = measureResults.size.height / measureResults.lineCount.toFloat()
         val entries =  (0 until entriesCount).map {
             val startLine = config.maxLineEntry * it
             val endLine = min(startLine + config.maxLineEntry - 1, measureResults.lineCount - 1)
@@ -28,7 +29,7 @@ class TextCalculatorImpl(
             val endOffset = measureResults.getLineEnd(endLine)
             TextCalculator.TextResult(
                 text = text.substring(startOffset, endOffset),
-                height = (lineHeight * linesCount).toInt()
+                height = lineHeight * linesCount
             )
         }
         return entries
@@ -38,6 +39,7 @@ class TextCalculatorImpl(
         val textMeasurer: TextMeasurer,
         val widthProvider: () -> Int,
         val textStyleProvider: () -> TextStyle,
-        val maxLineEntry: Int
+        val maxLineEntry: Int,
+        val lineTextProvider: () -> Float = { 0f },
     )
 }
